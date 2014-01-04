@@ -1,4 +1,4 @@
-package codechix.explorers.resources;
+package com.codechix.explorers.resources;
 
 import com.sun.jersey.api.view.Viewable;
 import org.codehaus.jettison.json.JSONArray;
