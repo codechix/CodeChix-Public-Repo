@@ -1,4 +1,4 @@
-package com.codechix.explorers;
+package com.codechix.explorers.solardata;
 
 import com.netflix.explorers.AbstractExplorerModule;
 import com.google.inject.Singleton;

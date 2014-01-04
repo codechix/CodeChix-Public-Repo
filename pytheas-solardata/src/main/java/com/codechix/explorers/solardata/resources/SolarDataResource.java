@@ -1,4 +1,4 @@
-package com.codechix.explorers.resources;
+package com.codechix.explorers.solardata.resources;
 
 import com.sun.jersey.api.view.Viewable;
 import org.codehaus.jettison.json.JSONArray;
@@ -16,11 +16,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-@Path("/helloworld")
+@Path("/solardata")
 public class SolarDataResource {
     private Logger LOG = LoggerFactory.getLogger(SolarDataResource.class);
 
@@ -45,18 +44,11 @@ public class SolarDataResource {
         String line = null;
         try {
             JSONArray installationList = new JSONArray();
-
+            br.readLine();   //skip header...
             while ((line = br.readLine()) != null) {
                 String[] stats = line.split(",");
                 final String applicationId = stats[0];
-                final BigDecimal incentiveAmount = new BigDecimal(stats[1]);
-                final BigDecimal totalCost = new BigDecimal(stats[2]);
-                final Integer zipCode = new Integer(stats[3]);
-                JSONObject solarInstallationJson = new JSONObject();
-                solarInstallationJson.put("applicationId", applicationId);
-                solarInstallationJson.put("incentiveAmount", incentiveAmount);
-                solarInstallationJson.put("totalCost", totalCost);
-                solarInstallationJson.put("zipCode", zipCode);
+                JSONObject solarInstallationJson = buildInstallation(stats);
                 installationList.put(solarInstallationJson);
             }
             output.put("solarInstallations", installationList);
@@ -67,5 +59,16 @@ public class SolarDataResource {
         }
 
         return Response.ok(output.toString()).build();
+    }
+
+    private JSONObject buildInstallation(String[] stats) throws JSONException {
+        JSONObject solarInstallationJson = new JSONObject();
+        SolarInstallation installation = new InstallationBuilder().buildWithStats(stats);
+
+        solarInstallationJson.put("applicationId", installation.getApplicationNumber());
+        solarInstallationJson.put("incentiveAmount", installation.getIncentiveAmount());
+        solarInstallationJson.put("totalCost", installation.getTotalCost());
+        solarInstallationJson.put("zipCode", installation.getZipCode());
+        return solarInstallationJson;
     }
 }

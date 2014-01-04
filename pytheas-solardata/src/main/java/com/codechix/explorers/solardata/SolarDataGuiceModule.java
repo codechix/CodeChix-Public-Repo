@@ -1,11 +1,11 @@
-package com.codechix.explorers;
+package com.codechix.explorers.solardata;
 
 import com.google.inject.AbstractModule;
 import com.netflix.explorers.Explorer;
 import com.netflix.explorers.annotations.ExplorerGuiceModule;
 import com.google.inject.multibindings.Multibinder;
 
-@ExplorerGuiceModule(jerseyPackagePath = "com.netflix.explorers.helloworld.resources")
+@ExplorerGuiceModule(jerseyPackagePath = "com.codechix.explorers.solardata.resources")
 public class SolarDataGuiceModule extends AbstractModule {
     @Override
     protected void configure() {
