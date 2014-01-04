@@ -1,0 +1,83 @@
+
+CREATE TABLE Pledges
+(
+  pledge_id int(50) NOT NULL PRIMARY KEY AUTOINCREMENT,
+  pledge_text varchar(160),
+  pledge_create_timestamp timestamp,
+);
+
+CREATE TABLE FacebookUsers
+(
+  fb_id int(50) unsigned NOT NULL PRIMARY KEY AUTOINCREMENT,
+  firstname varchar(30) NOT NULL,
+  lastname varchar(30),
+  user_create_timestamp timestamp,
+);
+
+CREATE TABLE Location
+(
+  location_id int(50) NOT NULL PRIMARY KEY AUTOINCREMENT,
+  location_latitude decimal(7,5),
+  location_longitude decimal(8,5),
+  location_description varchar(1000),
+  location_name varchar(50),
+  location_create_timestamp timestamp,
+);
+
+CREATE TABLE PhoneNumbers
+(
+  phone_id int(50) NOT NULL PRIMARY KEY AUTOINCREMENT,
+  phone_number varchar(20),
+  phone_number_create_timestamp timestamp, 
+);
+
+CREATE TABLE CrapHistory
+(
+  crap_history_id int(50) NOT NULL PRIMARY KEY AUTOINCREMENT,
+  crap_quantity_count int(1000),
+  crap_sighting_count int(1000),
+  location_id int(50),
+  phone_id int(50),
+  fb_id int(50),
+  crap_history_create_timestamp timestamp,
+);
+
+CREATE TABLE PledgeLocations
+(
+  pledge_locations_id int(50) NOT NULL PRIMARY KEY AUTOINCREMENT,
+  location_id int(50),
+  pledge_1 varchar(160),
+  pledge_2 varchar(160),
+  pledge_3 varchar(160),
+  pledge_locations_create_timestamp timestamp,
+);
+
+CREATE TABLE UserPledges
+(
+  user_pledges_id int(50) NOT NULL PRIMARY KEY AUTOINCREMENT,
+  user_id int(50),
+  location_id int(50),
+  pledge_id int(50),
+  phone_id int(20),
+  user_pledges_create_timestamp timestamp,
+);
+
+
+==================================
+
+JSON API
+
+GET: from SMS app:
+
+request: /location/<hashtag>
+response: 
+     success: crap sighting_count - see crap history table
+     failure: null
+
+POST: from SMS app:
+
+request: /location/<hashtag>
+ 	phone_number  - set in PhoneNumbers table
+
+
+

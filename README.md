@@ -1,12 +1,15 @@
+CodeChix-Public-Repo
+====================
+
+Various code from CodeChix members and attendees
+
  -- solardata --
 ================
-
 codechix Netflix OSS project
 
-Initial pytheas implementation of solardata
-# Getting Started
-* checkout code - git clone <<path here>>
-* run ./gradlew jettyRun
+Initial pytheas module for solardata
+* checkout code - git clone https://github.com/ehur/CodeChix-Public-Repo
+* run ./gradlew jettyRun -p pytheas-solardata
 
-You should see a simple solardata application running at http://localhost:8990/pytheas-solardata
-
+go to http://localhost:8990/pytheas-solardata/solardata/list
+application ui not working yet :)
