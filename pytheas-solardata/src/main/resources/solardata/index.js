@@ -12,12 +12,12 @@ $(document).ready(function() {
 
     var oTable = $('#solarstats-table').dataTable( {
         "aoColumns": [
-            { "sTitle": "applicationId",  "mDataProp" : "applicationid", "sWidth" : "10%", "sDefaultContent": "-" },
-            { "sTitle": "incentiveAmount",     "mDataProp" : "incentiveamount", "sWidth" : "10%", "sDefaultContent": "-" },
-            { "sTitle": "totalCost",     "mDataProp" : "totalcost", "sWidth" : "10%", "sDefaultContent": "-" },
-            { "sTitle": "zipCode",     "mDataProp" : "zipcode", "sWidth" : "10%", "sDefaultContent": "-" }
+            { "sTitle": "applicationId", "mDataProp" : "applicationId", "sWidth" : "10%", "sDefaultContent": "-" },
+            { "sTitle": "incentiveAmount", "mDataProp" : "incentiveAmount", "sWidth" : "10%", "sDefaultContent": "-" },
+            { "sTitle": "totalCost", "mDataProp" : "totalCost", "sWidth" : "10%", "sDefaultContent": "-" },
+            { "sTitle": "zipCode", "mDataProp" : "zipCode", "sWidth" : "10%", "sDefaultContent": "-" }
         ],
-        "sAjaxDataProp": "installations",
+        "sAjaxDataProp": "solarInstallations",
         "sAjaxSource": "list",
         "bDestroy"       : true,
         "bAutoWidth"     : false,
