@@ -8,6 +8,8 @@ $(document).ready(function() {
         ]
     });
 
+
+
     //"Application Number","Incentive Amount","Total Cost","Host Customer Physical Zip Code"
 
     var oTable = $('#solarstats-table').dataTable( {

@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <link href="${RequestContext.pathToRoot}res/css/blitzer-${Global.environmentName}/jquery-ui-1.8.19.custom.css" rel="stylesheet" type="text/css"/>
 <link href="${RequestContext.pathToRoot}res/js/jquery/datatables/css/demo_table_jui.css" rel="stylesheet" type="text/css"/>
 <link href="${RequestContext.pathToRoot}res/css/tipsy.css" rel="stylesheet" type="text/css"/>
@@ -46,3 +48,9 @@
 <script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/jquery/netflix/jquery.nfDynamicListForm.js"></script>
 <script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/jquery/netflix/jquery.nfBreadcrumbs.js"></script>
 
+
+
+<script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.min.js"></script>
+<script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.layout.min.js"></script>
+<script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.chart.min.js"></script>
+<script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.v3.min.js"></script>
