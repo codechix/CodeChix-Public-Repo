@@ -1,10 +1,10 @@
 $(document).ready(function() {
     "use strict";
-    document.title = "SolarData Explorer - D3";
+    document.title = "Fakedata Explorer - D3";
 
     $(".breadcrumb").nfBreadcrumbs({
         crumbs : [
-            { text : "Installations" }
+            { text : "d3" }
         ]
     });
 
@@ -41,4 +41,10 @@ $(document).ready(function() {
         .attr("y", barheight /2)
         .attr("dy", ".35em")
         .text(function(d){return d;}) ;
+
+    function getFakeData(){
+        var fakeStuff = $("#fake-stuff").text();
+        var fakeArray = fakeStuff.replace("[").replace("]").split(",");
+       $("#chart").text(fakeArray);
+    }
 });

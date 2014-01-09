@@ -1,6 +1,9 @@
 package com.codechix.explorers.solardata.resources;
 
 import com.sun.jersey.api.view.Viewable;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,12 +19,12 @@ public class FakeDataResource {
 
     @GET
     @Produces( MediaType.TEXT_HTML )
-    public Viewable showIndex()
-    {
+    public Viewable showIndex() throws JSONException {
         LOG.info("showIndex");
-        Map<String, Object> model = new HashMap<String, Object>();
-        List<String> values = Arrays.asList("1000","1001","1002");
-        model.put("values",values);
+        List<Integer> values = Arrays.asList(5000, 4000, 3000, 2000, 1000 );
+        JSONArray installationList = new JSONArray(values);
+        Map<String,Object> model = new HashMap<String,Object>();
+        model.put("values",installationList);
         return new Viewable( "/fakedata/index.ftl", model );
     }
 }

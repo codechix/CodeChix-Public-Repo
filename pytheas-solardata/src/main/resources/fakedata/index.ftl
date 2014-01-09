@@ -2,16 +2,26 @@
 
     <#import "/layout/bootstrap/simplepage.ftl" as layout />
 
-    <@layout.pagelayout title="Completed Solar Installations in California by zipcode">
+    <@layout.pagelayout title="This is where we play with d3">
 
     <!-- Move your JavaScript code to an include file -->
     <script type="text/javascript">
-<#--<#include "index.js"/>-->
-<#include "d3-index.js"/>
-</script>
+    <#include "d3-index.js"/>
+    <#include "underscore-min.js"/>
+    <#--<#include "${RequestContext.pathToRoot}res/js/d3/d3.v2.min.js"/>-->
 
-    <div id="chart"></div>
+    </script>
+    <div id="fake-stuff">${values}</div>
+    <div id="dont-mind-me-i-am-only-temporary">path to root is ${RequestContext.pathToRoot}</div>
+    <div id="chart">
+    </div>
 
+    <div id="star" style="float:left;background-color: white;margin-left: 100px;">
+        <svg width="300" height="200">
+            <polygon points="100,10 40,180 190,60 10,60 160,180"
+                     style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;"/>
+        </svg>
+    </div>
 
     <!-- Customize your styles here -->
     <style>
