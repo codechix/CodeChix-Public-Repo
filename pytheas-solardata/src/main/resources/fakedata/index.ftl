@@ -11,12 +11,12 @@
     <#--<#include "${RequestContext.pathToRoot}res/js/d3/d3.v2.min.js"/>-->
 
     </script>
-    <div id="fake-stuff">${values}</div>
-    <div id="dont-mind-me-i-am-only-temporary">path to root is ${RequestContext.pathToRoot}</div>
+    <div id="fake-stuff" class="temporary">${values}</div>
+    <div id="dont-mind-me-i-am-only-temporary" class="temporary">path to root is ${RequestContext.pathToRoot}</div>
     <div id="chart">
     </div>
 
-    <div id="star" style="float:left;background-color: white;margin-left: 100px;">
+    <div id="star" class="temporary" style="float:left;background-color: white;margin-left: 100px;">
         <svg width="300" height="200">
             <polygon points="100,10 40,180 190,60 10,60 160,180"
                      style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;"/>

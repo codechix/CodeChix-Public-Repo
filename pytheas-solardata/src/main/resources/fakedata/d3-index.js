@@ -9,7 +9,7 @@ $(document).ready(function() {
     });
 
     var topZipCodes = [93103, 94103, 95103, 96103, 97103],
-    topIncentives = [5000, 4000, 3000, 2000, 1000 ],
+    topIncentives = getFakeData(),
     chartScale = d3.scale.linear()
         .domain([0, d3.max(topIncentives)])
         .range([0, 500]),
@@ -42,9 +42,8 @@ $(document).ready(function() {
         .attr("dy", ".35em")
         .text(function(d){return d;}) ;
 
-    function getFakeData(){
-        var fakeStuff = $("#fake-stuff").text();
-        var fakeArray = fakeStuff.replace("[").replace("]").split(",");
-       $("#chart").text(fakeArray);
+    function getFakeData(){ //todo - replace with call to service that provides it
+       var fakeStuff = $("#fake-stuff").text();
+       return fakeStuff.replace("[","").replace("]","").split(",");
     }
 });
