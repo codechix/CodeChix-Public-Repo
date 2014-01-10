@@ -2,20 +2,14 @@
 
     <#import "/layout/bootstrap/simplepage.ftl" as layout />
 
-    <@layout.pagelayout title="This is where we play with d3">
+    <@layout.pagelayout title="More d3">
 
     <!-- Move your JavaScript code to an include file -->
     <script type="text/javascript">
-    <#include "d3-index.js"/>
-    <#include "underscore-min.js"/>
-    <#--<#include "${RequestContext.pathToRoot}res/js/d3/d3.v2.min.js"/>-->
+    <#include "d3-index-marla.js"/>
+
     </script>
-
-    <div class="marla-link"">
-    <a href="marla">Marla's page</a>
-    </div>
-
-    <div id="fake-stuff" class="temporary">${values}</div>
+    <div id="welcome-message"">${message}</div>
     <div id="chart">
     </div>
 
@@ -28,18 +22,6 @@
 
     <!-- Customize your styles here -->
     <style>
-        div.marla-link {
-            text-align: center;
-            background-color: darkorange;
-            max-width: 30%;
-            margin-left: 30%;
-            margin-bottom: 20px;
-            padding-top: 20;
-            padding-bottom: 20;
-            color: white;
-            font-weight: bolder;
-            font-size: 2em;
-        }
         div.dataTables_filter label {
             float: left;
             margin-bottom: 15px;
@@ -67,11 +49,6 @@
     </style>
 
     <svg class="chart-svg"></svg>
-
-    <!-- Define a table -->
-    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable" id="solarstats-table" style="width:50%;">
-    </table>
-
     </@layout.pagelayout>
 
 </#macro>

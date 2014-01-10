@@ -27,4 +27,14 @@ public class FakeDataResource {
         model.put("values",installationList);
         return new Viewable( "/fakedata/index.ftl", model );
     }
+
+    @GET
+    @Path("/marla")
+    @Produces( MediaType.TEXT_HTML )
+    public Viewable showMarlasPage() throws JSONException {
+        LOG.info("showIndex");
+        Map<String,Object> model = new HashMap<String,Object>();
+        model.put("message","Hi Marla - try out some d3");
+        return new Viewable( "/fakedata/index-marla.ftl", model );
+    }
 }
