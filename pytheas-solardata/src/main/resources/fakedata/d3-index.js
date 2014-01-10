@@ -14,8 +14,28 @@ $(document).ready(function() {
         .domain([0, d3.max(topIncentives)])
         .range([0, 500]),
     width = 500,
-    barheight = 20;
+    barHeight = 20,
+    chartSvg =d3.select(".chart-svg")
+        .attr("width", width)
+        .attr("height", barHeight * topIncentives.length);
 
+    /*========= svg bar chart */
+    var bar = chartSvg.selectAll("g")
+        .data(topIncentives)
+        .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+    bar.append("rect")
+        .attr("width", chartScale)
+        .attr("height", barHeight - 1);
+
+    bar.append("text")
+        .attr("x", function(d) { return chartScale(d) - 3; })
+        .attr("y", barHeight / 2)
+        .attr("dy", ".35em")
+        .text(function(d) { return d; });
+
+    /*========== html bar chart */
     d3.select("#chart")
         .selectAll("div")
         .data(topIncentives)
@@ -25,7 +45,7 @@ $(document).ready(function() {
 
     var chart = d3.select(".chart-svg")
         .attr("width",width)
-        .attr("height",barheight * topIncentives.length);
+        .attr("height",barHeight * topIncentives.length);
 
     var bar = chart.selectAll("g")
         .data(topIncentives)
@@ -34,11 +54,11 @@ $(document).ready(function() {
 
     bar.append("rect")
         .attr("width",chartScale)
-        .attr("height",barheight -1);
+        .attr("height",barHeight -1);
 
     bar.append("text")
         .attr("x", function(d){return chartScale(d) -3; })
-        .attr("y", barheight /2)
+        .attr("y", barHeight /2)
         .attr("dy", ".35em")
         .text(function(d){return d;}) ;
 
@@ -46,4 +66,6 @@ $(document).ready(function() {
        var fakeStuff = $("#fake-stuff").text();
        return fakeStuff.replace("[","").replace("]","").split(",");
     }
+
+
 });

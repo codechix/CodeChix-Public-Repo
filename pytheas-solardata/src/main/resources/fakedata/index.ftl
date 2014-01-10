@@ -12,7 +12,6 @@
 
     </script>
     <div id="fake-stuff" class="temporary">${values}</div>
-    <div id="dont-mind-me-i-am-only-temporary" class="temporary">path to root is ${RequestContext.pathToRoot}</div>
     <div id="chart">
     </div>
 
@@ -51,7 +50,7 @@
 
     </style>
 
-    <svg class="chart"></svg>
+    <svg class="chart-svg"></svg>
 
     <!-- Define a table -->
     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable" id="solarstats-table" style="width:50%;">
