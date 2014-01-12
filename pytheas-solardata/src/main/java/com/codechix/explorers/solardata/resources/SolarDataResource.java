@@ -46,7 +46,7 @@ public class SolarDataResource {
         BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
 
         JSONObject output = new JSONObject();
-        String line = null;
+        String line;
         try {
             JSONArray installationList = new JSONArray();
             br.readLine();   //skip header...
@@ -73,14 +73,34 @@ public class SolarDataResource {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream resourceAsStream = classLoader.getResourceAsStream("caSolarStats.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
-        JSONObject output = new JSONObject();
-        String line = null;
-        try {
-            Multiset<String> allZips = HashMultiset.create();
 
+        JSONObject output = new JSONObject();
+        JSONArray installationCountByZip = new JSONArray();
+        Multiset<String> allZips = getAllZips(br);
+
+        try {
+            for (String zip : Multisets.copyHighestCountFirst(allZips).elementSet()) {
+                int count = allZips.count(zip);
+                JSONObject zipCodeAndCount = new JSONObject();
+                zipCodeAndCount.put("zipCode",zip);
+                zipCodeAndCount.put("count",count);
+                installationCountByZip.put(zipCodeAndCount);
+            }
+            output.put("installationCountByZip", installationCountByZip);
+        } catch (JSONException e) {
+            LOG.error("JSONException in building installations by zipcode list", e);
+        }
+
+        return Response.ok(output.toString()).build();
+    }
+
+    private Multiset<String> getAllZips(BufferedReader br){
+        Multiset<String> allZips = HashMultiset.create();
+        String line;
+        String[] stats;
+        String zipCode;
+        try {
             br.readLine();   //skip header...
-            String[] stats;
-            String zipCode;
             while ((line = br.readLine()) != null) {
                 stats = line.split(",");
                 if (stats.length > 3 ) {
@@ -88,18 +108,11 @@ public class SolarDataResource {
                     allZips.add(zipCode);
                 }
             }
-            Map<String,Integer> zipCodeCounts = new HashMap<String,Integer>();
-            for (String zip : Multisets.copyHighestCountFirst(allZips).elementSet()) {
-                zipCodeCounts.put(zip,allZips.count(zip));
-            }
-            output.put("installationCountByZip", zipCodeCounts);
         } catch (IOException e) {
             LOG.error("IOException in reading solar installations list", e);
-        } catch (JSONException e) {
-            LOG.error("JSONException in building solar installations list ", e);
         }
 
-        return Response.ok(output.toString()).build();
+        return allZips;
     }
 
     private JSONObject buildInstallation(String[] stats) throws JSONException {
