@@ -67,7 +67,13 @@
     </style>
 
     <svg class="chart-svg"></svg>
+    <p>NEXT CHART HERE</p>
+    <br>
+    <div id="next-chart"></div>
 
+    <p>Circles</p>
+    <br>
+    <div id="circle-chart"></div>
     <!-- Define a table -->
     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable" id="solarstats-table" style="width:50%;">
     </table>

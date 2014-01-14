@@ -30,4 +30,4 @@
 
 <script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}min/js/jquery/netflix/jquery.netflix.min.js"></script>
 <script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.min.js"></script>
-<script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.v2.min.js"></script>
+<script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.v3.min.js"></script>
