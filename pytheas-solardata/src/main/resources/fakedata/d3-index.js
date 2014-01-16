@@ -76,7 +76,7 @@ $(document).ready(function() {
         var notifier=$(".notifier");
         notifier.append("<span>retrieving data...</span>").show();
         $.ajax({
-            url: "solardata/installationCountByZip.json",
+            url: "../solardata/installationCountByZip.json",
             success: function(data,textStatus,jqXHR){
                 var serverData = {};
                 serverData.children = data.installationCountByZip;
@@ -89,8 +89,7 @@ $(document).ready(function() {
                 notifier.attr("background-color","firebrick");
                 notifier.attr("color","white");
                 notifier.append("<span> STATUS: "+textStatus+ "&nbsp; ERROR: " + errorThrown +"</span>").show();
-            },
-            complete: function(){}
+            }
         });
     }
 
@@ -98,7 +97,8 @@ $(document).ready(function() {
         var notifier=$(".notifier");
         notifier.hide();
         notifier.empty();
-        notifier.append("<span>got it!</span>").show();
+        notifier.append("<span>got " +data.children.length + " zipcode records</span>").show();
+        notifier.fadeOut(5000);
     }
 
     var jsonZips = {
@@ -201,5 +201,6 @@ $(document).ready(function() {
 
     circlePackLayout();
     yellowCircles();
+    getInstallationsByZip();
 
 });
