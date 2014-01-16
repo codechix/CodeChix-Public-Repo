@@ -79,7 +79,10 @@ $(document).ready(function() {
             url: "../solardata/installationCountByZip.json",
             success: function(data,textStatus,jqXHR){
                 var serverData = {};
-                serverData.children = data.installationCountByZip;
+               serverData.children = _.map(data.installationCountByZip,function(entry){
+                    return {zipCode:entry.zipCode,
+                            value:entry.count};
+                })
                 doPack(serverData);
             },
             failure: function(jqXHR, textStatus, errorThrown){
@@ -98,7 +101,8 @@ $(document).ready(function() {
         notifier.hide();
         notifier.empty();
         notifier.append("<span>got " +data.children.length + " zipcode records</span>").show();
-        notifier.fadeOut(5000);
+        notifier.fadeOut(4000);
+        circlePackLayout(data,1500,1000);
     }
 
     var jsonZips = {
@@ -114,9 +118,9 @@ $(document).ready(function() {
             ]}
         ;
 
-    function circlePackLayout(zipData) {
+    function circlePackLayout(zipData,w,h) {
 
-        var packWidth = 960,packHeight = 500,
+        var packWidth = w,packHeight = h,
             format = d3.format(",d"),
             fill = d3.scale.category10(),
             bubbleScale=d3.scale.linear()
@@ -132,7 +136,7 @@ $(document).ready(function() {
             .attr("width", packWidth)
             .attr("height", packHeight);
 
-        var node = svg.data([jsonZips]).selectAll(".node")
+        var node = svg.data([zipData]).selectAll(".node")
             .data(pack.nodes)
             .enter().append("g")
                 .attr("transform", function(d) {
@@ -199,7 +203,7 @@ $(document).ready(function() {
             });
     }
 
-    circlePackLayout(jsonZips);
+    //circlePackLayout(jsonZips,960,500);
     yellowCircles();
     getInstallationsByZip();
 
