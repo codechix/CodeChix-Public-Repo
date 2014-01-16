@@ -114,13 +114,13 @@ $(document).ready(function() {
             ]}
         ;
 
-    function circlePackLayout() {
+    function circlePackLayout(zipData) {
 
         var packWidth = 960,packHeight = 500,
             format = d3.format(",d"),
             fill = d3.scale.category10(),
             bubbleScale=d3.scale.linear()
-                .domain([0, d3.max(jsonZips.children,function(d){return d.value;})])
+                .domain([0, d3.max(zipData.children,function(d){return d.value;})])
                 .range([0, packHeight]);
 
         var pack = d3.layout.pack()
@@ -199,7 +199,7 @@ $(document).ready(function() {
             });
     }
 
-    circlePackLayout();
+    circlePackLayout(jsonZips);
     yellowCircles();
     getInstallationsByZip();
 
