@@ -11,19 +11,12 @@
     <#--<#include "${RequestContext.pathToRoot}res/js/d3/d3.v2.min.js"/>-->
     </script>
 
+    <div class="notifier" style="display:none;"></div>
     <div class="marla-link"">
     <a href="marla">Marla's page</a>
     </div>
 
-    <div id="fake-stuff" class="temporary">${values}</div>
     <div id="chart">
-    </div>
-
-    <div id="star" class="temporary" style="float:left;background-color: white;margin-left: 100px;">
-        <svg width="300" height="200">
-            <polygon points="100,10 40,180 190,60 10,60 160,180"
-                     style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;"/>
-        </svg>
     </div>
 
     <!-- Customize your styles here -->
@@ -43,6 +36,14 @@
         div.dataTables_filter label {
             float: left;
             margin-bottom: 15px;
+            max-width: 30%;
+            margin-left: 30%;
+        }
+
+        div.notifier {
+            background-color: lightgreen;
+            border: solid;
+            padding: 3em;
         }
 
         #chart div {
@@ -66,7 +67,7 @@
 
     </style>
 
-    <svg class="chart-svg"></svg>
+    <div class="chart-placeholder"></div>
     <p>NEXT CHART HERE</p>
     <br>
     <div id="next-chart"></div>
