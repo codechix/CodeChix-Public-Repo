@@ -46,8 +46,8 @@ public class ExplorerAppTest {
 
     private static final Map<String, String> REST_END_POINTS = new ImmutableMap.Builder<String, String>()
         .put("/", MediaType.TEXT_HTML)
-        .put("/helloworld", MediaType.TEXT_HTML)
-        .put("/helloworld/list", MediaType.APPLICATION_JSON)
+//        .put("/helloworld", MediaType.TEXT_HTML)
+//        .put("/helloworld/list", MediaType.APPLICATION_JSON)
         .build();
 
 
