@@ -27,6 +27,7 @@ import java.util.Map;
 @Path("/solardata")
 public class SolarDataResource {
     private Logger LOG = LoggerFactory.getLogger(SolarDataResource.class);
+    private String pathToSolarStats = "caSolarStats.csv";
 
     @GET
     @Produces( MediaType.TEXT_HTML )
@@ -42,7 +43,7 @@ public class SolarDataResource {
     @GET
     public Response getSolarStats() {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream resourceAsStream = classLoader.getResourceAsStream("caSolarStats.csv");
+        InputStream resourceAsStream = classLoader.getResourceAsStream(getPathToSolarStats());
         BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
 
         JSONObject output = new JSONObject();
@@ -71,7 +72,7 @@ public class SolarDataResource {
     @GET
     public Response getInstallationCountByZip() throws JSONException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream resourceAsStream = classLoader.getResourceAsStream("caSolarStats.csv");
+        InputStream resourceAsStream = classLoader.getResourceAsStream(getPathToSolarStats());
         BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
 
         JSONObject output = new JSONObject();
@@ -124,5 +125,13 @@ public class SolarDataResource {
         solarInstallationJson.put("totalCost", installation.getTotalCost());
         solarInstallationJson.put("zipCode", installation.getZipCode());
         return solarInstallationJson;
+    }
+
+    public String getPathToSolarStats() {
+        return pathToSolarStats;
+    }
+
+    public void setPathToSolarStats(String pathToSolarStats) {
+        this.pathToSolarStats = pathToSolarStats;
     }
 }

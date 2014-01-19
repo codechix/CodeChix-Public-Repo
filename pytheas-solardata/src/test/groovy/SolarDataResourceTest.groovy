@@ -16,20 +16,39 @@ import spock.lang.Specification
 
 import javax.ws.rs.core.MediaType
 
-@Ignore
 public class SolarDataResourceTest extends Specification {
 
     SolarDataResource resource
     TestServer testServer
     HttpResponse response
 
-    @After
-    public void teardown(){
-        EntityUtils.consume(response.getEntity())
-        if (testServer != null)
-            testServer.stop()
+    def getSolarStatsTest(){
+        given:
+            def path="testCaSolarData.csv"
+            resource = new SolarDataResource()
+            resource.setPathToSolarStats(path)
+        when:
+            def response = resource.getSolarStats()
+        then:
+            response
+            response.getStatus()  == 200
+            response.getEntity() == "{\"solarInstallations\":[{\"applicationId\":\"\\\"SD-CSI-07388\\\"\",\"incentiveAmount\":\"35000\",\"totalCost\":\"71000\",\"zipCode\":\"91901\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"7000\",\"totalCost\":\"55000\",\"zipCode\":\"93013\"},{\"applicationId\":\"\\\"SD-CSI-02825\\\"\",\"incentiveAmount\":\"9000\",\"totalCost\":\"59000.4\",\"zipCode\":\"94103\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"6000\",\"totalCost\":\"50000\",\"zipCode\":\"93013\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"5000\",\"totalCost\":\"45000\",\"zipCode\":\"93013\"}]}"
     }
 
+    def getInstallationCountByZipTest(){
+        given:
+        def path="testCaSolarData.csv"
+            resource = new SolarDataResource()
+            resource.setPathToSolarStats(path)
+        when:
+            def response = resource.getInstallationCountByZip()
+        then:
+            response
+            response.getStatus()  == 200
+            response.getEntity() == "{\"installationCountByZip\":[{\"zipCode\":\"93013\",\"count\":3},{\"zipCode\":\"94103\",\"count\":1},{\"zipCode\":\"91901\",\"count\":1}]}"
+    }
+
+    @Ignore //I think I've got the wrong endPoint path here... tbd
     def testList(){
         given:
             resource = new SolarDataResource()
@@ -44,6 +63,7 @@ public class SolarDataResourceTest extends Specification {
         then:
             response.getStatusLine().getStatusCode() == 200
             response.getEntity().getContentType().getValue() ==  MediaType.APPLICATION_JSON
+            teardown()
         }
 
 
@@ -92,6 +112,12 @@ public class SolarDataResourceTest extends Specification {
         }
 
     }
+    public void teardown(){
+        EntityUtils.consume(response.getEntity())
+        if (testServer != null)
+            testServer.stop()
+    }
+
 
 
 }
