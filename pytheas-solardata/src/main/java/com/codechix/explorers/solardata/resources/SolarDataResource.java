@@ -28,6 +28,7 @@ import java.util.Map;
 public class SolarDataResource {
     private Logger LOG = LoggerFactory.getLogger(SolarDataResource.class);
     private String pathToSolarStats = "caSolarStats.csv";
+    private String pathToSolarStatsExtra = "caSolarStatsExtra.csv";
 
     @GET
     @Produces( MediaType.TEXT_HTML )
@@ -95,25 +96,63 @@ public class SolarDataResource {
         return Response.ok(output.toString()).build();
     }
 
+    @Produces({"application/json"})
+    @Path("/installationCountByCounty.json")
+    @GET
+    public Response getInstallationCountByCounty() throws JSONException {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream resourceAsStream = classLoader.getResourceAsStream(getPathToSolarStatsExtra());
+        BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
+
+        JSONObject output = new JSONObject();
+        JSONArray installationCountByCounty = new JSONArray();
+        Multiset<String> allCounties = getAllCounties(br);
+
+        try {
+            for (String county : Multisets.copyHighestCountFirst(allCounties).elementSet()) {
+                int count = allCounties.count(county);
+                JSONObject countyAndCount = new JSONObject();
+                countyAndCount.put("county",county);
+                countyAndCount.put("count",count);
+                installationCountByCounty.put(countyAndCount);
+            }
+            output.put("installationCountByCounty", installationCountByCounty);
+        } catch (JSONException e) {
+            LOG.error("JSONException in building installations by county list", e);
+        }
+
+        return Response.ok(output.toString()).build();
+    }
+
     private Multiset<String> getAllZips(BufferedReader br){
-        Multiset<String> allZips = HashMultiset.create();
+        Multiset<String> allZips = createMultiSetForColIndex(br, 3);
+        return allZips;
+    }
+
+    private Multiset<String> getAllCounties(BufferedReader br){
+        Multiset<String> allCounties = createMultiSetForColIndex(br, 4);
+        return allCounties;
+    }
+
+    private Multiset<String> createMultiSetForColIndex(BufferedReader br, Integer colIndex){
+        Multiset<String> multiset = HashMultiset.create();
         String line;
         String[] stats;
-        String zipCode;
+        String col;
         try {
             br.readLine();   //skip header...
             while ((line = br.readLine()) != null) {
                 stats = line.split(",");
-                if (stats.length > 3 ) {
-                    zipCode = stats[3];
-                    allZips.add(zipCode);
+                if (stats.length > colIndex ) {
+                    col = stats[colIndex];
+                    multiset.add(col);
                 }
             }
         } catch (IOException e) {
             LOG.error("IOException in reading solar installations list", e);
         }
 
-        return allZips;
+        return multiset;
     }
 
     private JSONObject buildInstallation(String[] stats) throws JSONException {
@@ -133,5 +172,13 @@ public class SolarDataResource {
 
     public void setPathToSolarStats(String pathToSolarStats) {
         this.pathToSolarStats = pathToSolarStats;
+    }
+
+    public String getPathToSolarStatsExtra() {
+        return pathToSolarStatsExtra;
+    }
+
+    public void setPathToSolarStatsExtra(String pathToSolarStatsExtra) {
+        this.pathToSolarStatsExtra = pathToSolarStatsExtra;
     }
 }

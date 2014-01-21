@@ -48,6 +48,19 @@ public class SolarDataResourceTest extends Specification {
             response.getEntity() == "{\"installationCountByZip\":[{\"zipCode\":\"93013\",\"count\":3},{\"zipCode\":\"94103\",\"count\":1},{\"zipCode\":\"91901\",\"count\":1}]}"
     }
 
+    def getInstallationCountByCountyTest(){
+        given:
+        def path="testCaSolarDataExtra.csv"
+        resource = new SolarDataResource()
+        resource.setPathToSolarStatsExtra(path)
+        when:
+        def response = resource.getInstallationCountByCounty()
+        then:
+        response
+        response.getStatus()  == 200
+        response.getEntity() == "{\"installationCountByCounty\":[{\"county\":\"San Diego\",\"count\":3},{\"county\":\"Santa Barbara\",\"count\":1}]}"
+    }
+
     @Ignore //I think I've got the wrong endPoint path here... tbd
     def testList(){
         given:
