@@ -11,7 +11,7 @@ public class SolarDataGuiceModule extends AbstractModule {
     protected void configure() {
         Multibinder<Explorer> explorersBinder = Multibinder.newSetBinder(binder(), Explorer.class);
         explorersBinder.addBinding().to(SolarDataExplorer.class);
-        explorersBinder.addBinding().to(FakeDataExplorer.class);
+//        explorersBinder.addBinding().to(FakeDataExplorer.class);
         explorersBinder.addBinding().to(SolarMapExplorer.class);
 
     }
