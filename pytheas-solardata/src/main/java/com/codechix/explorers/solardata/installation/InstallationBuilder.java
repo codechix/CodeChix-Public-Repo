@@ -1,4 +1,4 @@
-package com.codechix.explorers.solardata.resources;
+package com.codechix.explorers.solardata.installation;
 
 public class InstallationBuilder {
 

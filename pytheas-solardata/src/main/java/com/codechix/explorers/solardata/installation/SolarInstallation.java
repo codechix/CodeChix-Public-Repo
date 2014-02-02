@@ -1,4 +1,4 @@
-package com.codechix.explorers.solardata.resources;
+package com.codechix.explorers.solardata.installation;
 
 public class SolarInstallation {
 
@@ -18,7 +18,7 @@ public class SolarInstallation {
         this.applicationNumber = applicationNumber;
     }
 
-    String getIncentiveAmount() {
+    public String getIncentiveAmount() {
         return incentiveAmount;
     }
 
@@ -26,7 +26,7 @@ public class SolarInstallation {
         this.incentiveAmount = incentiveAmount;
     }
 
-    String getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 

@@ -1,5 +1,7 @@
 package com.codechix.explorers.solardata.resources;
 
+import com.codechix.explorers.solardata.installation.InstallationBuilder;
+import com.codechix.explorers.solardata.installation.SolarInstallation;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
@@ -19,9 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Path("/solardata")
