@@ -1,10 +1,10 @@
 $(document).ready(function() {
     "use strict";
-    document.title = "SolarData Explorer";
+    document.title = "CA Solar Installations List";
 
     $(".breadcrumb").nfBreadcrumbs({
         crumbs : [
-            { text : "Installations" }
+            { text : "CA Solar Installations List" }
         ]
     });
 

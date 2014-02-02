@@ -2,7 +2,7 @@
 
 <#import "/layout/bootstrap/simplepage.ftl" as layout />
 
-<@layout.pagelayout title="Completed Solar Installations in California by zipcode">
+<@layout.pagelayout title="List of completed solar installations in California">
 
 <!-- Move your JavaScript code to an include file -->
 <script type="text/javascript">
