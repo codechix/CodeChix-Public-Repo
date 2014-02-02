@@ -7,22 +7,46 @@
 <!-- Move your JavaScript code to an include file -->
 <script type="text/javascript">
 <#include "solarmap.js"/>
-
 </script>
-<!-- Customize your styles here -->
+
+
 <style>
+.heading {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2em;
+    color: #ff7211;
+}
+.interesting-area {
+    margin-top:1em;
+}
+.interesting-area > span {
+    margin-left: 2em;
+}
+
+.zipcode {
+    fill: #bbb;
+}
+
+.zipcode-boundary {
+    fill: none;
+    stroke: #fff;
+    stroke-linejoin: round;
+}
+
+text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    text-anchor: middle;
+}
+
 
 </style>
 
-<div class="chart-placeholder"></div>
-<p>NEXT CHART HERE</p>
-<br>
-<div id="next-chart"></div>
-
-<p>Circles</p>
-<br>
-<div id="circle-chart"></div>
-
+<div class="interesting-area">
+    <span class="heading">CALIFORNIA ZIPCODES</span>
+    <div class="map-placeholder">
+    </div>
+</div>
 </@layout.pagelayout>
 
 </#macro>

@@ -8,7 +8,49 @@ $(document).ready(function() {
         ]
     });
 
-    function getInstallationsByZip(){
+    function drawCalifornia(containerSelector){
+        var width=800,height=1600,svg,projection,path,zip;
+
+        projection = d3.geo.albers()
+            .center([0,42])
+            .rotate([126,0])
+            .parallels([32,42])
+            .scale(5000)
+            .translate([200,400]);
+
+        path = d3.geo.path().projection(projection);
+
+        svg=d3.select(containerSelector).append("svg")
+            .attr("width",width)
+            .attr("height",height);
+
+        d3.json("ca_zipcodes.json",function(errors,zips){
+            var zipcodeAreas = topojson.feature(zips, zips.objects.ca_zipcodes);
+
+            svg.append("path")
+                .datum(zipcodeAreas)
+                .attr("class","zipcode")
+                .attr("d",path);
+
+            svg.append("path")
+                .datum(topojson.mesh(zips, zips.objects.ca_zipcodes, function(a, b) { return a !== b; }))
+                .attr("class", "zipcode-boundary")
+                .attr("d", path);
+
+            svg.selectAll("text")
+                .data(zipcodeAreas.features)
+                .enter().append("text")
+                .attr("transform", function(d) {
+                    return "translate(" + path.centroid(d) + ") scale(0.3)";
+                })
+                .attr("dy", ".35em")
+                .text(function(d) {
+                    return d.properties.GEOID10;
+                });
+        });
+    }
+
+    function getInstallationsByZip(callback){
         var notifier=$(".notifier");
         notifier.append("<span>retrieving data...</span>").show();
         $.ajax({
@@ -19,7 +61,7 @@ $(document).ready(function() {
                     return {zipCode:entry.zipCode,
                         value:entry.count};
                 })
-                doPack(serverData);
+                callback(serverData);
             },
             failure: function(jqXHR, textStatus, errorThrown){
                 var notifier=$(".notifier");
@@ -88,6 +130,7 @@ $(document).ready(function() {
             });
     }
 
-    getInstallationsByZip();
+    //getInstallationsByZip(doPack);
+    drawCalifornia(".map-placeholder");
 
 });
