@@ -21,6 +21,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -160,10 +164,19 @@ public class SolarDataResource {
         SolarInstallation installation = new InstallationBuilder().buildWithStats(stats);
 
         solarInstallationJson.put("applicationId", installation.getApplicationNumber());
-        solarInstallationJson.put("incentiveAmount", installation.getIncentiveAmount());
-        solarInstallationJson.put("totalCost", installation.getTotalCost());
+        solarInstallationJson.put("incentiveAmount", formattedAmount(installation.getIncentiveAmount()));
+        solarInstallationJson.put("totalCost", formattedAmount(installation.getTotalCost()));
         solarInstallationJson.put("zipCode", installation.getZipCode());
         return solarInstallationJson;
+    }
+
+    private String formattedAmount(String amount){
+        BigDecimal decimalAmount = new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP);
+        NumberFormat formatter =  NumberFormat.getCurrencyInstance();
+        formatter.setMaximumFractionDigits(0);
+        formatter.setCurrency(Currency.getInstance("USD"));
+        formatter.setGroupingUsed(true);
+        return formatter.format(decimalAmount);
     }
 
     public String getPathToSolarStats() {

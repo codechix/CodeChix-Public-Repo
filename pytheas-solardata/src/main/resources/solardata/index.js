@@ -12,7 +12,8 @@ $(document).ready(function() {
 
     //"Application Number","Incentive Amount","Total Cost","Host Customer Physical Zip Code"
 
-    var oTable = $('#solarstats-table').dataTable( {
+    var myTable = $('#solarstats-table').dataTable( {
+        "aaSorting": [],
         "aoColumns": [
             { "sTitle": "applicationId", "mDataProp" : "applicationId", "sWidth" : "10%", "sDefaultContent": "-" },
             { "sTitle": "incentiveAmount", "mDataProp" : "incentiveAmount", "sWidth" : "10%", "sDefaultContent": "-" },
@@ -23,9 +24,9 @@ $(document).ready(function() {
         "sAjaxSource": "list",
         "bDestroy"       : true,
         "bAutoWidth"     : false,
-        "bStateSave"     : true,
-        "bPaginate"      : false,
-        "bLengthChange"  : false,
-        "aaSorting": []
+        "bStateSave"     : false,
+        "bPaginate"      : true,
+        "iDisplayLength" : 100,
+        "bLengthChange"  : true
     });
 });

@@ -32,7 +32,7 @@ public class SolarDataResourceTest extends Specification {
         then:
             response
             response.getStatus()  == 200
-            response.getEntity() == "{\"solarInstallations\":[{\"applicationId\":\"\\\"SD-CSI-07388\\\"\",\"incentiveAmount\":\"35000\",\"totalCost\":\"71000\",\"zipCode\":\"91901\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"7000\",\"totalCost\":\"55000\",\"zipCode\":\"93013\"},{\"applicationId\":\"\\\"SD-CSI-02825\\\"\",\"incentiveAmount\":\"9000\",\"totalCost\":\"59000.4\",\"zipCode\":\"94103\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"6000\",\"totalCost\":\"50000\",\"zipCode\":\"93013\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"5000\",\"totalCost\":\"45000\",\"zipCode\":\"93013\"}]}"
+            response.getEntity() == "{\"solarInstallations\":[{\"applicationId\":\"\\\"SD-CSI-07388\\\"\",\"incentiveAmount\":\"\$35,000\",\"totalCost\":\"\$71,000\",\"zipCode\":\"91901\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"\$7,000\",\"totalCost\":\"\$55,000\",\"zipCode\":\"93013\"},{\"applicationId\":\"\\\"SD-CSI-02825\\\"\",\"incentiveAmount\":\"\$9,000\",\"totalCost\":\"\$59,000\",\"zipCode\":\"94103\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"\$6,000\",\"totalCost\":\"\$50,000\",\"zipCode\":\"93013\"},{\"applicationId\":\"\\\"SD-CSI-01581\\\"\",\"incentiveAmount\":\"\$5,000\",\"totalCost\":\"\$45,000\",\"zipCode\":\"93013\"}]}"
     }
 
     def getInstallationCountByZipTest(){
