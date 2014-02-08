@@ -37,8 +37,17 @@ $(document).ready(function() {
             svg.selectAll(".zipcode")
                 .data(zipcodeAreas.features)
                 .enter().append("path")
+                .attr("fill",function(d){
+                   if ( installationsByZip[d.properties.ZCTA5CE10]){
+                       return "yellow";
+                   } else {
+                       return "currentColor";
+                   }
+                })
                 .attr("fill-opacity",function(d){
-                    var opacityFactor = installationsByZip[d.properties.ZCTA5CE10] / maxNumInstallationsZip;
+                    var thisZipcodeCount = installationsByZip[d.properties.ZCTA5CE10],
+                        opacityFactor;
+                    var opacityFactor = thisZipcodeCount ? thisZipcodeCount / maxNumInstallationsZip.count : 1;
                     return opacityFactor;})
                 .attr("d",path);
 
@@ -147,10 +156,10 @@ $(document).ready(function() {
     //getInstallationsByZip(doPack);
 
     $.when(getInstallationsData()).then(function(data){
-        _.each(data.installationCountByZip,function(element){        //TODO: here - should be a _.map? we're just ending up with 1 value in the object.
+        _.each(data.installationCountByZip,function(element){
            installationsByZip[element.zipCode] = element.count;
         });
-        maxNumInstallationsZip = _.max(installationsByZip,function(data){
+        maxNumInstallationsZip = _.max(data.installationCountByZip,function(data){
            return data.count;
         });
         drawCalifornia(".map-placeholder");

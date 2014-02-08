@@ -27,6 +27,11 @@
     fill: none;
     stroke: #18bbff;
     stroke-linejoin: round;
+    strike-width: 1;
+}
+
+.zipcode {
+    fill: #aeaeae;
 }
 
 text {
