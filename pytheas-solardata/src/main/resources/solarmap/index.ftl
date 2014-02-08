@@ -23,13 +23,9 @@
     margin-left: 2em;
 }
 
-.zipcode {
-    fill: #bbb;
-}
-
 .zipcode-boundary {
     fill: none;
-    stroke: #fff;
+    stroke: #18bbff;
     stroke-linejoin: round;
 }
 

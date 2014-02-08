@@ -8,6 +8,8 @@ $(document).ready(function() {
         ]
     });
 
+    var installationsByZip = {},maxNumInstallationsZip;
+
     function drawCalifornia(containerSelector){
         var width=800,height=1600,svg,projection,path,zip;
 
@@ -32,6 +34,14 @@ $(document).ready(function() {
                 .attr("class","zipcode")
                 .attr("d",path);
 
+            svg.selectAll(".zipcode")
+                .data(zipcodeAreas.features)
+                .enter().append("path")
+                .attr("fill-opacity",function(d){
+                    var opacityFactor = installationsByZip[d.properties.ZCTA5CE10] / maxNumInstallationsZip;
+                    return opacityFactor;})
+                .attr("d",path);
+
             svg.append("path")
                 .datum(topojson.mesh(zips, zips.objects.ca_zipcodes, function(a, b) { return a !== b; }))
                 .attr("class", "zipcode-boundary")
@@ -48,6 +58,10 @@ $(document).ready(function() {
                     return d.properties.GEOID10;
                 });
         });
+    }
+
+    function getInstallationsData(){
+        return $.getJSON("../solardata/installationCountByZip.json").promise();
     }
 
     function getInstallationsByZip(callback){
@@ -131,6 +145,16 @@ $(document).ready(function() {
     }
 
     //getInstallationsByZip(doPack);
-    drawCalifornia(".map-placeholder");
+
+    $.when(getInstallationsData()).then(function(data){
+        _.each(data.installationCountByZip,function(element){        //TODO: here - should be a _.map? we're just ending up with 1 value in the object.
+           installationsByZip[element.zipCode] = element.count;
+        });
+        maxNumInstallationsZip = _.max(installationsByZip,function(data){
+           return data.count;
+        });
+        drawCalifornia(".map-placeholder");
+    });
+
 
 });

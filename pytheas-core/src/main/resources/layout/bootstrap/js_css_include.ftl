@@ -32,3 +32,4 @@
 <script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.min.js"></script>
 <script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/d3/d3.v3.min.js"></script>
 <script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/topojson/topojson.v1.min.js"></script>
+<script type="text/javascript" language="javascript" src="${RequestContext.pathToRoot}res/js/underscore/underscore-min.js"></script>
