@@ -16,13 +16,13 @@ import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.Map;
 
-@Path("/solarmap")
+@Path("/solarInstallsByZipMap")
 public class SolarInstallsByZipMapResource {
 
     @GET
     @Produces( MediaType.TEXT_HTML)
     public Viewable solarMap(){
-        return new Viewable("/solarmap/index.ftl");
+        return new Viewable("/solarInstallsByZipMap/index.ftl");
     }
     @Produces({"application/json"})
     @Path("/ca_zipcodes.json")
