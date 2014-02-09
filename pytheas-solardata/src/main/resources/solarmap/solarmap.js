@@ -31,25 +31,28 @@ $(document).ready(function() {
 
             svg.append("path")
                 .datum(zipcodeAreas)
-                .attr("class","zipcode")
+                .attr("class","zipcode-nosolar")
                 .attr("d",path);
 
-            svg.selectAll(".zipcode")
+            svg.selectAll(".zipcode-nosolar")
                 .data(zipcodeAreas.features)
                 .enter().append("path")
-                .attr("fill",function(d){
-                   if ( installationsByZip[d.properties.ZCTA5CE10]){
-                       return "yellow";
-                   } else {
-                       return "currentColor";
-                   }
+                .attr("class",function(d){
+                    if ( installationsByZip[d.properties.GEOID10] > 0){
+                        return "zipcode-solar";
+                    } else {
+                        return "zipcode-nosolar";
+                    }
                 })
-                .attr("fill-opacity",function(d){
-                    var thisZipcodeCount = installationsByZip[d.properties.ZCTA5CE10],
-                        opacityFactor;
-                    var opacityFactor = thisZipcodeCount ? thisZipcodeCount / maxNumInstallationsZip.count : 1;
-                    return opacityFactor;})
+                .attr("data-zip",function(d){return d.properties.GEOID10;})
                 .attr("d",path);
+
+            svg.selectAll(".zipcode-solar")
+                .attr("fill-opacity",function(d){
+                    var zipcode = d.properties.GEOID10,
+                        opacityFactor = (installationsByZip[zipcode] > 0) ? installationsByZip[zipcode] / maxNumInstallationsZip.count : 1;
+                    return opacityFactor;
+                });
 
             svg.append("path")
                 .datum(topojson.mesh(zips, zips.objects.ca_zipcodes, function(a, b) { return a !== b; }))

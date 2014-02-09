@@ -25,13 +25,17 @@
 
 .zipcode-boundary {
     fill: none;
-    stroke: #18bbff;
+    stroke: black;
     stroke-linejoin: round;
-    strike-width: 1;
+    stroke-width: 0.2;
 }
 
-.zipcode {
-    fill: #aeaeae;
+.zipcode-nosolar {
+    fill: #ddbfd1;
+}
+
+.zipcode-solar {
+    fill: yellow;
 }
 
 text {
