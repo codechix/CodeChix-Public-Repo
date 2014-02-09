@@ -21,5 +21,19 @@ public class SolarInstallsByCountyMapResource {
     public Viewable solarMap(){
         return new Viewable("/solarInstallsByCountyMap/index.ftl");
     }
+    @Produces({"application/json"})
+    @Path("/ca_counties.json")
+    @GET
+    public Response getCounties() throws IOException, JSONException {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("ca_counties.json");
 
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(stream, writer, "UTF-8");
+        String theString = writer.toString();
+
+        JSONObject json = new JSONObject(theString);
+
+        return Response.ok(json.toString()).build();
+    }
 }

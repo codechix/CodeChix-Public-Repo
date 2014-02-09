@@ -76,30 +76,6 @@ $(document).ready(function() {
         return $.getJSON("../solardata/installationCountByZip.json").promise();
     }
 
-    function getInstallationsByZip(callback){
-        var notifier=$(".notifier");
-        notifier.append("<span>retrieving data...</span>").show();
-        $.ajax({
-            url: "../solardata/installationCountByZip.json",
-            success: function(data,textStatus,jqXHR){
-                var serverData = {};
-                serverData.children = _.map(data.installationCountByZip,function(entry){
-                    return {zipCode:entry.zipCode,
-                        value:entry.count};
-                })
-                callback(serverData);
-            },
-            failure: function(jqXHR, textStatus, errorThrown){
-                var notifier=$(".notifier");
-                notifier.hide();
-                notifier.empty();
-                notifier.attr("background-color","firebrick");
-                notifier.attr("color","white");
-                notifier.append("<span> STATUS: "+textStatus+ "&nbsp; ERROR: " + errorThrown +"</span>").show();
-            }
-        });
-    }
-
     function doPack(data){
         var notifier=$(".notifier");
         notifier.hide();

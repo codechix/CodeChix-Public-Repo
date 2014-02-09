@@ -2,11 +2,11 @@
 
 <#import "/layout/bootstrap/simplepage.ftl" as layout />
 
-<@layout.pagelayout title="# of completed solar installations by zipcode: d3 map">
+<@layout.pagelayout title="# of completed solar installations by county: d3 map">
 
 <!-- Move your JavaScript code to an include file -->
 <script type="text/javascript">
-<#include "solarInstallsByZipMap.js"/>
+<#include "solarInstallsByCountyMap.js"/>
 </script>
 
 
@@ -23,18 +23,18 @@
     margin-left: 2em;
 }
 
-.zipcode-boundary {
+.county-boundary {
     fill: none;
     stroke: black;
     stroke-linejoin: round;
     stroke-width: 0.2;
 }
 
-.zipcode-nosolar {
+.county-nosolar {
     fill: #ddbfd1;
 }
 
-.zipcode-solar {
+.county-solar {
     fill: yellow;
 }
 
@@ -48,7 +48,7 @@ text {
 </style>
 
 <div class="interesting-area">
-    <span class="heading">CALIFORNIA ZIPCODES</span>
+    <span class="heading">CALIFORNIA COUNTIES</span>
     <div class="map-placeholder">
     </div>
 </div>
