@@ -2,9 +2,9 @@ package com.codechix.explorers.solardata;
 
 import com.netflix.explorers.AbstractExplorerModule;
 
-public class SolarMapExplorer extends AbstractExplorerModule {
+public class SolarInstallsByZipMapExplorer extends AbstractExplorerModule {
 
-    public SolarMapExplorer() {
+    public SolarInstallsByZipMapExplorer() {
         super("solarmap");
     }
 }

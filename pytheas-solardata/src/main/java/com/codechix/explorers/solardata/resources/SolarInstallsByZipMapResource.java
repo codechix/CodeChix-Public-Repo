@@ -17,7 +17,7 @@ import java.io.*;
 import java.util.Map;
 
 @Path("/solarmap")
-public class SolarMapResource {
+public class SolarInstallsByZipMapResource {
 
     @GET
     @Produces( MediaType.TEXT_HTML)

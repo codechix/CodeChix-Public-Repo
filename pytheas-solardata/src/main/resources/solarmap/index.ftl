@@ -6,7 +6,7 @@
 
 <!-- Move your JavaScript code to an include file -->
 <script type="text/javascript">
-<#include "solarmap.js"/>
+<#include "solarInstallsByZipmap.js"/>
 </script>
 
 
