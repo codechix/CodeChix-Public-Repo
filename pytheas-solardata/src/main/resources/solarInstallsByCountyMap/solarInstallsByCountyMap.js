@@ -44,7 +44,7 @@ $(document).ready(function() {
                         return "county-nosolar";
                     }
                 })
-                .attr("data-zip",function(d){return d.properties.NAME;})
+//                .attr("data-zip",function(d){return d.properties.NAME;})
                 .attr("d",path);
 
             svg.selectAll(".county-solar")

@@ -29,7 +29,7 @@ public class SolarInstallsByZipMapResource {
     @GET
     public Response getCaZipcodes() throws IOException, JSONException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("ca_zipcodes.json");
+        InputStream stream = classLoader.getResourceAsStream("ca_zipcodes_2.json");
 
         StringWriter writer = new StringWriter();
         IOUtils.copy(stream, writer, "UTF-8");

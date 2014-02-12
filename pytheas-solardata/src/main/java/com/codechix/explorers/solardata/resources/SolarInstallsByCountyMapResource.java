@@ -26,7 +26,7 @@ public class SolarInstallsByCountyMapResource {
     @GET
     public Response getCounties() throws IOException, JSONException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("ca_counties.json");
+        InputStream stream = classLoader.getResourceAsStream("ca_counties_2.json");
 
         StringWriter writer = new StringWriter();
         IOUtils.copy(stream, writer, "UTF-8");

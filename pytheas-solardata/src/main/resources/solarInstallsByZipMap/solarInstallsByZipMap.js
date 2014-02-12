@@ -59,14 +59,14 @@ $(document).ready(function() {
                 .attr("class", "zipcode-boundary")
                 .attr("d", path);
 
-            svg.selectAll("text")
-                .data(zipcodeAreas.features)
-                .enter().append("text")
-                .attr("transform", function(d) {
-                    return "translate(" + path.centroid(d) + ") scale(0.3)";
-                })
-                .attr("dy", ".35em")
-                .text(function(d) {
+            svg.selectAll(".zipcode-solar")
+//                .data(zipcodeAreas.features)
+                .append("text")
+//                .attr("transform", function(d) {
+//                    return "translate(" + path.centroid(d) + ") scale(0.3)";
+//                })
+//                .attr("dy", ".35em")
+                .attr("text",function(d) {
                     return d.properties.GEOID10;
                 });
         });
