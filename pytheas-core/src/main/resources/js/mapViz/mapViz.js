@@ -3,7 +3,7 @@
     $.fn.mapViz = function(opts) {
 
         // given: level (county/zip), sourceType (csv/json), source (http json resource), csvColIndexForLevel, csvColIndexForCount,
-        //        jsonArrayName, jsonLevelProperty, jsonCountProperty
+        //        jsonWrapperObjectName, jsonLevelProperty, jsonCountProperty
         // when: init -> populate mapDataArray
         // when: render -> drawCaliforniaWithData
 
@@ -12,7 +12,7 @@
             source = opts.source,
             csvColIndexForLevel = opts.csvColIndexForLevel,
             csvColIndexForCount = opts.csvColIndexForCount,
-            jsonArrayName = opts.jsonArrayName,
+            jsonWrapperObjectName = opts.jsonWrapperObjectName,
             jsonLevelProperty = opts.jsonLevelProperty,
             jsonCountProperty = opts.jsonCountProperty,
             mapDataArray = {},
@@ -25,10 +25,10 @@
             if (sourceType === "json") {
                 var deferred = $.Deferred();
                 $.when(getJsonData()).then(function(data){
-                    _.each(data[jsonArrayName],function(element){
+                    _.each(data[jsonWrapperObjectName],function(element){
                         mapDataArray[element[jsonLevelProperty]] = element[jsonCountProperty];
                     });
-                    placeWithMaxCount = _.max(data[jsonArrayName],function(data){
+                    placeWithMaxCount = _.max(data[jsonWrapperObjectName],function(data){
                         return data.count[jsonCountProperty];
                     });
                     deferred.resolve();
@@ -48,8 +48,10 @@
         }
 
         function drawCalifornia(containerElement){
-            var width=800,height=1600,svg,projection,path,zip;
-
+            
+            var width=800,height=1600,svg,projection,path,zip,
+                jsonMapFile = (level === "zip") ? "ca_zipcodes_2.json" : "ca_counties_name.json";  //defaults to county level unless zip specified. 
+            
             projection = d3.geo.albers()
                 .center([0,42])
                 .rotate([126,0])
@@ -59,12 +61,12 @@
 
             path = d3.geo.path().projection(projection);
 
-            svg=d3.select(containerElement).append("svg")
+            svg=d3.select(containerElement.selector).append("svg")
                 .attr("width",width)
                 .attr("height",height);
 
-            d3.json("ca_counties_name.json",function(errors,zips){
-                var counties = topojson.feature(zips, zips.objects.ca_counties);
+            d3.json(jsonMapFile,function(errors,zips){
+                var counties = topojson.feature(zips, zips.objects.ca_counties);  //todo - feature name will not be ca_counties for the zipcode - need to make this variable
 
                 svg.append("path")
                     .datum(counties)
@@ -92,7 +94,7 @@
                     });
 
                 svg.append("path")
-                    .datum(topojson.mesh(zips, zips.objects.ca_counties, function(a, b) { return a !== b; }))
+                    .datum(topojson.mesh(zips, zips.objects.ca_counties, function(a, b) { return a !== b; }))          //todo - feature name will not be ca_counties for the zipcode - need to make this variable
                     .attr("class", "county-boundary")
                     .attr("d", path);
 
@@ -109,7 +111,7 @@
             });
         }
 
-        return {render: render}
+        return render(this);
     }
 
 }(jQuery));
