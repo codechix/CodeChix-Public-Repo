@@ -23,18 +23,18 @@
     margin-left: 2em;
 }
 
-.zipcode-boundary {
+.area-boundary {
     fill: none;
     stroke: black;
     stroke-linejoin: round;
     stroke-width: 0.2;
 }
 
-.zipcode-nosolar {
+.area-nosolar {
     fill: #ddbfd1;
 }
 
-.zipcode-solar {
+.area-solar {
     fill: yellow;
 }
 

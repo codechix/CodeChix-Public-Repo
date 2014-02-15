@@ -6,6 +6,7 @@
         //        jsonWrapperObjectName, jsonLevelProperty, jsonCountProperty
         // when: init -> populate mapDataArray
         // when: render -> drawCaliforniaWithData
+        //TODO: styling. Color schemes.
 
         var level = opts.level,
             sourceType = opts.sourceType,
@@ -47,10 +48,14 @@
             return $.getJSON(source).promise();
         }
 
+        function getAreaId(){
+            return (level === "zip") ? "GEOID10" : "NAME";
+        }
+
         function drawCalifornia(containerElement){
             
             var width=800,height=1600,svg,projection,path,zip,
-                jsonMapFile = (level === "zip") ? "ca_zipcodes_2.json" : "ca_counties_name.json";  //defaults to county level unless zip specified. 
+                jsonMapFile = (level === "zip") ? "ca_zipcodes.json" : "ca_counties_name.json";  //defaults to county level unless zip specified.
             
             projection = d3.geo.albers()
                 .center([0,42])
@@ -65,48 +70,49 @@
                 .attr("width",width)
                 .attr("height",height);
 
-            d3.json(jsonMapFile,function(errors,zips){
-                var counties = topojson.feature(zips, zips.objects.ca_counties);  //todo - feature name will not be ca_counties for the zipcode - need to make this variable
+            d3.json(jsonMapFile,function(errors,mapData){
+                var featureName = (level === "zip") ? "ca_zipcodes" : "ca_counties",
+                    areas = topojson.feature(mapData, mapData.objects[featureName]);
 
                 svg.append("path")
-                    .datum(counties)
-                    .attr("class","county-nosolar")
+                    .datum(areas)
+                    .attr("class","area-nosolar")
                     .attr("d",path);
 
-                svg.selectAll(".county-nosolar")
-                    .data(counties.features)
+                svg.selectAll(".area-nosolar")
+                    .data(areas.features)
                     .enter().append("path")
                     .attr("class",function(d){
-                        if ( mapDataArray[d.properties.NAME] > 0){
-                            return "county-solar";
+                        if ( mapDataArray[d.properties[getAreaId()]] > 0){
+                            return "area-solar";
                         } else {
-                            return "county-nosolar";
+                            return "area-nosolar";
                         }
                     })
 //                .attr("data-zip",function(d){return d.properties.NAME;})
                     .attr("d",path);
 
-                svg.selectAll(".county-solar")
+                svg.selectAll(".area-solar")
                     .attr("fill-opacity",function(d){
-                        var county = d.properties.NAME,
-                            opacityFactor = (mapDataArray[county] > 0) ? mapDataArray[county] / placeWithMaxCount.count : 1;
+                        var areaId = d.properties[getAreaId()],
+                            opacityFactor = (mapDataArray[areaId] > 0) ? mapDataArray[areaId] / placeWithMaxCount.count : 1;
                         return opacityFactor;
                     });
 
                 svg.append("path")
-                    .datum(topojson.mesh(zips, zips.objects.ca_counties, function(a, b) { return a !== b; }))          //todo - feature name will not be ca_counties for the zipcode - need to make this variable
-                    .attr("class", "county-boundary")
+                    .datum(topojson.mesh(mapData, mapData.objects[featureName], function(a, b) { return a !== b; }))
+                    .attr("class", "area-boundary")
                     .attr("d", path);
 
                 svg.selectAll("text")
-                    .data(counties.features)
+                    .data(areas.features)
                     .enter().append("text")
                     .attr("transform", function(d) {
                         return "translate(" + path.centroid(d) + ") scale(0.3)";
                     })
                     .attr("dy", ".35em")
                     .text(function(d) {
-                        return d.properties.NAME;
+                        return d.properties[getAreaId()];
                     });
             });
         }

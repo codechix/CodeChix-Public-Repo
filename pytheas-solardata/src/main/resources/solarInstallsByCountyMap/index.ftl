@@ -23,18 +23,18 @@
     margin-left: 2em;
 }
 
-.county-boundary {
+.area-boundary {
     fill: none;
     stroke: black;
     stroke-linejoin: round;
     stroke-width: 0.2;
 }
 
-.county-nosolar {
+.area-nosolar {
     fill: #ddbfd1;
 }
 
-.county-solar {
+.area-solar {
     fill: yellow;
 }
 
