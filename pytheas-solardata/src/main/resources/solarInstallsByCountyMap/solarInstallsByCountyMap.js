@@ -1,10 +1,10 @@
 $(document).ready(function() {
     "use strict";
-    document.title = "# of completed solar installations by zipcode: d3 map";
+    document.title = "# of completed solar installations by county: d3 map";
 
     $(".breadcrumb").nfBreadcrumbs({
         crumbs : [
-            { text : "# of completed solar installations by zipcode: d3 map" }
+            { text : "# of completed solar installations by county: d3 map" }
         ]
     });
 

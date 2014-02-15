@@ -29,7 +29,7 @@
                         mapDataArray[element[jsonLevelProperty]] = element[jsonCountProperty];
                     });
                     placeWithMaxCount = _.max(data[jsonWrapperObjectName],function(data){
-                        return data.count[jsonCountProperty];
+                        return data[jsonCountProperty];
                     });
                     deferred.resolve();
                 });
@@ -89,7 +89,7 @@
                 svg.selectAll(".county-solar")
                     .attr("fill-opacity",function(d){
                         var county = d.properties.NAME,
-                            opacityFactor = (mapDataArray[jsonLevelProperty] > 0) ? mapDataArray[jsonLevelProperty] / placeWithMaxCount.count : 1;
+                            opacityFactor = (mapDataArray[county] > 0) ? mapDataArray[county] / placeWithMaxCount.count : 1;
                         return opacityFactor;
                     });
 
