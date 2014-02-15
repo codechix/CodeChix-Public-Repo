@@ -26,8 +26,8 @@ $(document).ready(function() {
             .attr("width",width)
             .attr("height",height);
 
-        d3.json("ca_counties.json",function(errors,zips){
-            var counties = topojson.feature(zips, zips.objects.tl_2013_06_cousub);
+        d3.json("ca_counties_name.json",function(errors,zips){
+            var counties = topojson.feature(zips, zips.objects.ca_counties);
 
             svg.append("path")
                 .datum(counties)
@@ -55,7 +55,7 @@ $(document).ready(function() {
                 });
 
             svg.append("path")
-                .datum(topojson.mesh(zips, zips.objects.tl_2013_06_cousub, function(a, b) { return a !== b; }))
+                .datum(topojson.mesh(zips, zips.objects.ca_counties, function(a, b) { return a !== b; }))
                 .attr("class", "county-boundary")
                 .attr("d", path);
 
