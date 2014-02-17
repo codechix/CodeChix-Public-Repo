@@ -13,7 +13,7 @@
             source = opts.source,
             csvColIndexForLevel = opts.csvColIndexForLevel,
             csvColIndexForCount = opts.csvColIndexForCount,
-            jsonWrapperObjectName = opts.jsonWrapperObjectName,
+            jsonWrapperObjectName = opts.jsonWrapperObjectName,//TODO: make this fixed. something like data...
             jsonLevelProperty = opts.jsonLevelProperty,
             jsonCountProperty = opts.jsonCountProperty,
             mapDataArray = {},
@@ -54,15 +54,15 @@
 
         function drawCalifornia(containerElement){
             
-            var width=800,height=1600,svg,projection,path,zip,
+            var width=800,height=1200,svg,projection,path,zip,
                 jsonMapFile = (level === "zip") ? "ca_zipcodes.json" : "ca_counties_name.json";  //defaults to county level unless zip specified.
             
             projection = d3.geo.albers()
-                .center([0,42])
-                .rotate([126,0])
+                .rotate([122,0])            //rotate from 0 longitude over to 122, where CA is
+                .center([0,38])             //center the projection around 38 latitude
                 .parallels([32,42])
                 .scale(5000)
-                .translate([200,400]);
+                .translate([250,370]);      //The translation offset determines the pixel coordinates of the projection’s center.
 
             path = d3.geo.path().projection(projection);
 
