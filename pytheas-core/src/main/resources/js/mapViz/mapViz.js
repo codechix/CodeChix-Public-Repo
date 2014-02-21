@@ -13,7 +13,7 @@
             source = opts.source,
             csvColIndexForLevel = opts.csvColIndexForLevel,
             csvColIndexForCount = opts.csvColIndexForCount,
-            jsonWrapperObjectName = opts.jsonWrapperObjectName,
+            jsonWrapperObjectName = opts.jsonWrapperObjectName,//TODO: make this fixed. something like data...
             jsonLevelProperty = opts.jsonLevelProperty,
             jsonCountProperty = opts.jsonCountProperty,
             mapDataArray = {},
