@@ -17,9 +17,17 @@
             jsonLevelProperty = opts.jsonLevelProperty,
             jsonCountProperty = opts.jsonCountProperty,
             mapDataArray = {},
-            placeWithMaxCount;
+            placeWithMaxCount,
+            schemes = {},
+            colorScheme;
 
         function init(){
+            schemes.whiteToYellow = {zeroFill:"white",maxFill:"#fffc19"};
+            schemes.brownToGold = {zeroFill: "#582f0a",maxFill:"#ffbf34"};
+            schemes.blackToGreen = {zeroFill: "#151827",maxFill:"#B4FF47"};
+
+            colorScheme = opts.colorScheme ? schemes[opts.colorScheme] : schemes["whiteToYellow"];
+
             if (sourceType === "csv") {
 //                initCsv();
             }
@@ -70,39 +78,46 @@
                 .attr("width",width)
                 .attr("height",height);
 
+            svg.append("rect")
+                .attr("fill","white")
+                .attr("width","100%")
+                .attr("height","100%");
+
             d3.json(jsonMapFile,function(errors,mapData){
                 var featureName = (level === "zip") ? "ca_zipcodes" : "ca_counties",
                     areas = topojson.feature(mapData, mapData.objects[featureName]);
 
                 svg.append("path")
                     .datum(areas)
-                    .attr("class","area-nosolar")
+                    .attr("class","area-nofill")
+                    .attr("fill",colorScheme.zeroFill)
+                    .attr("stroke","gray")
+                    .attr("stroke-linejoin","round")
+                    .attr("stroke-width",0.2)
                     .attr("d",path);
 
-                svg.selectAll(".area-nosolar")
+                svg.selectAll(".area-nofill")
                     .data(areas.features)
                     .enter().append("path")
                     .attr("class",function(d){
                         if ( mapDataArray[d.properties[getAreaId()]] > 0){
-                            return "area-solar";
+                            return "area-fill";
                         } else {
-                            return "area-nosolar";
+                            return "area-nofill";
                         }
                     })
-//                .attr("data-zip",function(d){return d.properties.NAME;})
                     .attr("d",path);
 
-                svg.selectAll(".area-solar")
+                svg.selectAll(".area-nofill")
+                    .attr("fill",colorScheme.zeroFill);
+
+                svg.selectAll(".area-fill")
+                    .attr("fill",colorScheme.maxFill)
                     .attr("fill-opacity",function(d){
                         var areaId = d.properties[getAreaId()],
-                            opacityFactor = (mapDataArray[areaId] > 0) ? mapDataArray[areaId] / placeWithMaxCount.count : 1;
+                            opacityFactor = (mapDataArray[areaId] > 0) ? mapDataArray[areaId] / placeWithMaxCount.count : 0;
                         return opacityFactor;
                     });
-
-                svg.append("path")
-                    .datum(topojson.mesh(mapData, mapData.objects[featureName], function(a, b) { return a !== b; }))
-                    .attr("class", "area-boundary")
-                    .attr("d", path);
 
                 svg.selectAll("text")
                     .data(areas.features)

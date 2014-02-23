@@ -25,7 +25,7 @@
 
 .area-boundary {
     fill: none;
-    stroke: black;
+    stroke: gray;
     stroke-linejoin: round;
     stroke-width: 0.2;
 }
