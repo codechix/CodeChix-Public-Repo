@@ -3,23 +3,24 @@
     $.fn.mapViz = function(opts) {
 
         // given: level (county/zip), sourceType (csv/json), source (http json resource), csvColIndexForLevel, csvColIndexForCount,
-        //        jsonWrapperObjectName, jsonLevelProperty, jsonCountProperty
+        //        jsonWrapperObjectName, jsonLevelProperty, jsonCountProperty,
+        //        colorScheme (one of whiteToYellow ,brownToGold , blackToGreen ,darkGreenToLightGreen)
         // when: init -> populate mapDataArray
         // when: render -> drawCaliforniaWithData
-        //TODO: styling. Color schemes.
 
         var level = opts.level,
             sourceType = opts.sourceType,
             source = opts.source,
             csvColIndexForLevel = opts.csvColIndexForLevel,
             csvColIndexForCount = opts.csvColIndexForCount,
-            jsonWrapperObjectName = opts.jsonWrapperObjectName,//TODO: make this fixed. something like data...
+            jsonWrapperObjectName = opts.jsonWrapperObjectName,//TODO: make this fixed? something like data...
             jsonLevelProperty = opts.jsonLevelProperty,
             jsonCountProperty = opts.jsonCountProperty,
             mapDataArray = {},
             placeWithMaxCount,
             schemes = {},
-            colorScheme;
+            colorScheme,
+            csvHasHeader = opts.csvHasHeader;
 
         function init(){
             schemes.whiteToYellow = {zeroFill:"white",maxFill:"#fffc19"};
@@ -30,7 +31,18 @@
             colorScheme = opts.colorScheme ? schemes[opts.colorScheme] : schemes["whiteToYellow"];
 
             if (sourceType === "csv") {
-//                initCsv();
+                var deferred = $.Deferred();
+                $.when(getCsvData()).then(function(lines){
+                    var linesData = csvHasHeader ? lines.shift() : lines;    //remove optional header rec
+                    _.each(linesData,function(line){
+                        mapDataArray[line[csvColIndexForLevel]] = line[csvColIndexForCount];
+                    });
+                    placeWithMaxCount = _.max(linesData,function(line){
+                        return line[csvColIndexForCount];
+                    });
+                    deferred.resolve();
+                });
+                return deferred.promise();
             }
             if (sourceType === "json") {
                 var deferred = $.Deferred();
@@ -47,14 +59,19 @@
             }
        }
 
-        function render(mapPlaceholderElement){
-            init().done(function(){
-                drawCalifornia(mapPlaceholderElement);
-            });
+
+        function getCsvData(){
+            return $.get(source).promise();
         }
 
         function getJsonData(){
             return $.getJSON(source).promise();
+        }
+
+        function render(mapPlaceholderElement){
+            init().done(function(){
+                drawCalifornia(mapPlaceholderElement);
+            });
         }
 
         function getAreaId(){
