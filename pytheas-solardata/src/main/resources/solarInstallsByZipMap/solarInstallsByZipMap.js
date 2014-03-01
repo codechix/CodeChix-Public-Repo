@@ -14,7 +14,8 @@ $(document).ready(function() {
         source: "../solardata/installationCountByZip.json",
         jsonWrapperObjectName: "installationCountByZip",
         jsonLevelProperty: "zipCode",
-        jsonCountProperty: "count"
+        jsonCountProperty: "count",
+        colorScheme: "darkGreenToLightGreen"
     };
 
     $(".map-placeholder").mapViz(mapperOptions);

@@ -14,7 +14,8 @@ $(document).ready(function() {
         source: "../solardata/installationCountByCounty.json",
         jsonWrapperObjectName: "installationCountByCounty",
         jsonLevelProperty: "county",
-        jsonCountProperty: "count"
+        jsonCountProperty: "count",
+        colorScheme: "blackToGreen"
     };
 
     $(".map-placeholder").mapViz(mapperOptions);
