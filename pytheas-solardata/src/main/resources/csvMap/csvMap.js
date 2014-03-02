@@ -1,10 +1,10 @@
 $(document).ready(function() {
     "use strict";
-    document.title = "# of completed solar installations by county: d3 map";
+    document.title = "Unemployment Rates by County (December 2013)";
 
     $(".breadcrumb").nfBreadcrumbs({
         crumbs : [
-            { text : "# of completed solar installations by county: d3 map" }
+            { text : "Unemployment Rates by County (December 2013)" }
         ]
     });
 
@@ -14,7 +14,7 @@ $(document).ready(function() {
         csvColIndexForLevel: 0,
         csvColIndexForCount: 5,
         csvHasHeader: true,
-        source: "county_unemployment_rates.csv",
+        source: "../solardata/county_unemployment_rates.csv",
         colorScheme: "brownToGold"     //not very appropriate actually. get a better one.
     };
 

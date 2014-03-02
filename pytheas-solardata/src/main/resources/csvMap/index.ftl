@@ -2,7 +2,7 @@
 
 <#import "/layout/bootstrap/simplepage.ftl" as layout />
 
-<@layout.pagelayout title="# of completed solar installations by county: d3 map">
+<@layout.pagelayout title="Unemployment Rates by County (December 2013)">
 
 <!-- Move your JavaScript code to an include file -->
 <script type="text/javascript">
@@ -30,13 +30,6 @@
     stroke-width: 0.2;
 }
 
-.area-nosolar {
-    fill: #ddbfd1;
-}
-
-.area-solar {
-    fill: yellow;
-}
 
 text {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

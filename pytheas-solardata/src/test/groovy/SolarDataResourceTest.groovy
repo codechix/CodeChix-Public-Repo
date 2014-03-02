@@ -15,6 +15,7 @@ import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response
 
 public class SolarDataResourceTest extends Specification {
 
@@ -59,6 +60,32 @@ public class SolarDataResourceTest extends Specification {
         response
         response.getStatus()  == 200
         response.getEntity() == "{\"installationCountByCounty\":[{\"county\":\"San Diego\",\"count\":3},{\"county\":\"Santa Barbara\",\"count\":1}]}"
+    }
+
+    def getUnemploymentData(){
+        given:
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            InputStream resourceAsStream = classLoader.getResourceAsStream("county_unemployment_rates.csv");
+            BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
+            String line;
+            StringBuffer theData = new StringBuffer()
+            try {
+                while((line = br.readLine()) != null){
+                    theData.append(line)
+                    theData.append("\n")
+                }
+
+                }
+            catch (IOException e) {
+                false
+            }
+            resource = new SolarDataResource()
+        when:
+            Response response = resource.getUnemploymentData()
+        then:
+            response
+            response.getStatus() == 200
+            response.getEntity().toString() == theData.toString()
     }
 
     @Ignore //I think I've got the wrong endPoint path here... tbd

@@ -13,6 +13,7 @@ public class SolarDataGuiceModule extends AbstractModule {
         explorersBinder.addBinding().to(SolarDataExplorer.class);
         explorersBinder.addBinding().to(SolarInstallsByZipMapExplorer.class);
         explorersBinder.addBinding().to(SolarInstallsByCountyMapExplorer.class);
+        explorersBinder.addBinding().to(UnemploymentDataExplorer.class);
 
     }
 }

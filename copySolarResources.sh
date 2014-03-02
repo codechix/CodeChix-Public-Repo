@@ -5,6 +5,8 @@ cp /home/lhurley/git/netflix/pytheas/gradle-solardata/pytheas-solardata/src/main
 echo "**--- copying solarInstallsByCountyMap..."
 cp /home/lhurley/git/netflix/pytheas/gradle-solardata/pytheas-solardata/src/main/resources/solarInstallsByCountyMap/* /home/lhurley/git/netflix/pytheas/gradle-solardata/pytheas-solardata/build/resources/main/solarInstallsByCountyMap/.
 
+echo "**--- copying csvMap..."
+cp /home/lhurley/git/netflix/pytheas/gradle-solardata/pytheas-solardata/src/main/resources/csvMap/* /home/lhurley/git/netflix/pytheas/gradle-solardata/pytheas-solardata/build/resources/main/csvMap/.
 
 echo "**-- copying mapViz.js"
 cp /home/lhurley/git/netflix/pytheas/gradle-solardata/pytheas-core/src/main/resources/js/mapViz/mapViz.js /home/lhurley/git/netflix/pytheas/gradle-solardata/pytheas-core/build/resources/main/js/mapViz/mapViz.js

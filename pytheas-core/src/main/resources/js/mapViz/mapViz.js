@@ -33,12 +33,17 @@
             if (sourceType === "csv") {
                 var deferred = $.Deferred();
                 $.when(getCsvData()).then(function(lines){
-                    var linesData = csvHasHeader ? lines.shift() : lines;    //remove optional header rec
-                    _.each(linesData,function(line){
-                        mapDataArray[line[csvColIndexForLevel]] = line[csvColIndexForCount];
+                    var allLines = lines.split(/\r\n|\n/);
+                    if (csvHasHeader) {
+                        allLines.shift();               //remove optional header rec
+                    }
+                    _.each(allLines,function(line){
+                        var lineElements = line.splitCSV();
+                        mapDataArray[lineElements[csvColIndexForLevel]] = Number(lineElements[csvColIndexForCount]);
                     });
-                    placeWithMaxCount = _.max(linesData,function(line){
-                        return line[csvColIndexForCount];
+                    placeWithMaxCount = _.max(allLines,function(line){
+                        var lineElements = line.splitCSV();
+                        return Number(lineElements[csvColIndexForCount]);
                     });
                     deferred.resolve();
                 });
@@ -81,7 +86,7 @@
         function drawCalifornia(containerElement){
             
             var width=800,height=1200,svg,projection,path,zip,
-                jsonMapFile = (level === "zip") ? "ca_zipcodes.json" : "ca_counties_name.json";  //defaults to county level unless zip specified.
+                jsonMapFile = (level === "zip") ? "ca_zipcodes.json" : "../solardata/ca_counties_name.json";  //defaults to county level unless zip specified.
             
             projection = d3.geo.albers()
                 .rotate([122,0])            //rotate from 0 longitude over to 122, where CA is
