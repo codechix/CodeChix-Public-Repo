@@ -18,6 +18,7 @@
             jsonCountProperty = opts.jsonCountProperty,
             mapDataArray = {},
             placeWithMaxCount,
+            maxCount,
             schemes = {},
             colorScheme,
             csvHasHeader = opts.csvHasHeader;
@@ -38,13 +39,15 @@
                         allLines.shift();               //remove optional header rec
                     }
                     _.each(allLines,function(line){
-                        var lineElements = line.splitCSV();
-                        mapDataArray[lineElements[csvColIndexForLevel]] = Number(lineElements[csvColIndexForCount]);
+                        var lineElements = line.splitCSV(),
+                            level = lineElements[csvColIndexForLevel].toLowerCase();
+                        mapDataArray[level] = Number(lineElements[csvColIndexForCount]);
                     });
                     placeWithMaxCount = _.max(allLines,function(line){
                         var lineElements = line.splitCSV();
                         return Number(lineElements[csvColIndexForCount]);
                     });
+                    maxCount = Number(placeWithMaxCount.splitCSV()[csvColIndexForCount]);
                     deferred.resolve();
                 });
                 return deferred.promise();
@@ -53,11 +56,13 @@
                 var deferred = $.Deferred();
                 $.when(getJsonData()).then(function(data){
                     _.each(data[jsonWrapperObjectName],function(element){
-                        mapDataArray[element[jsonLevelProperty]] = element[jsonCountProperty];
+                        var level = element[jsonLevelProperty].toLowerCase();
+                        mapDataArray[level] = element[jsonCountProperty];
                     });
                     placeWithMaxCount = _.max(data[jsonWrapperObjectName],function(data){
                         return data[jsonCountProperty];
                     });
+                    maxCount = Number(placeWithMaxCount.count);
                     deferred.resolve();
                 });
                 return deferred.promise();
@@ -112,7 +117,6 @@
 
                 svg.append("path")
                     .datum(areas)
-                    .attr("class","area-nofill")
                     .attr("fill",colorScheme.zeroFill)
                     .attr("stroke","gray")
                     .attr("stroke-linejoin","round")
@@ -121,9 +125,10 @@
 
                 svg.selectAll(".area-nofill")
                     .data(areas.features)
-                    .enter().append("path")
+                    .enter()
+                    .append("path")
                     .attr("class",function(d){
-                        if ( mapDataArray[d.properties[getAreaId()]] > 0){
+                        if ( mapDataArray[d.properties[getAreaId()].toLowerCase()] > 0){
                             return "area-fill";
                         } else {
                             return "area-nofill";
@@ -137,8 +142,8 @@
                 svg.selectAll(".area-fill")
                     .attr("fill",colorScheme.maxFill)
                     .attr("fill-opacity",function(d){
-                        var areaId = d.properties[getAreaId()],
-                            opacityFactor = (mapDataArray[areaId] > 0) ? mapDataArray[areaId] / placeWithMaxCount.count : 0;
+                        var areaId = d.properties[getAreaId()].toLowerCase(),
+                            opacityFactor = (mapDataArray[areaId] > 0) ? mapDataArray[areaId] / maxCount : 0;
                         return opacityFactor;
                     });
 
