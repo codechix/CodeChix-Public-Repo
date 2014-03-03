@@ -4,7 +4,7 @@
 
         // given: level (county/zip), sourceType (csv/json), source (http json resource), csvColIndexForLevel, csvColIndexForCount,
         //        jsonWrapperObjectName, jsonLevelProperty, jsonCountProperty,
-        //        colorScheme (one of whiteToYellow ,brownToGold , blackToGreen ,darkGreenToLightGreen)
+        //        colorScheme (one of orange, purple, green or blue)
         // when: init -> populate mapDataArray
         // when: render -> drawCaliforniaWithData
 
@@ -23,13 +23,65 @@
             colorScheme,
             csvHasHeader = opts.csvHasHeader;
 
+        function getScheme(){
+            var schemes = {orange : [ "#fff5eb",
+                                       "#fee6ce",
+                                       "#fdd0a2",
+                                       "#fdae6b",
+                                       "#fd8d3c",
+                                       "#f16913",
+                                       "#d94801",
+                                       "#a63603",
+                                       "#7f2704"],
+                            purple : [ "#fcfbfd",
+                                        "#efedf5",
+                                        "#dadaeb",
+                                        "#bcbddc",
+                                        "#9e9ac8",
+                                        "#807dba",
+                                        "#6a51a3",
+                                        "#54278f",
+                                        "#3f007d"],
+                            green:[ "#f7fcf5",
+                                    "#e5f5e0",
+                                    "#c7e9c0",
+                                    "#a1d99b",
+                                    "#74c476",
+                                    "#41ab5d",
+                                    "#238b45",
+                                    "#006d2c",
+                                    "#00441b"],
+                            blue: [ "#f7fbff",
+                                    "#deebf7",
+                                    "#c6dbef",
+                                    "#9ecae1",
+                                    "#6baed6",
+                                    "#4292c6",
+                                    "#2171b5",
+                                    "#08519c",
+                                    "#08306b"]
+            }
+            return (opts.colorScheme && schemes[opts.colorScheme]) ? schemes[opts.colorScheme] : schemes["orange"]; //orange is default
+        }
+
+        function getScaledColor(areaId){
+            if (!mapDataArray[areaId] > 0) {return "white";}
+            var percentOfMax = mapDataArray[areaId] * 100/ maxCount,
+                bucketSize = 11.111,    //9 buckets in 100
+                bucket = _.find([1,2,3,4,5,6,7,8,9], function(i){
+                      return Math.round(percentOfMax) <= Math.round(i * bucketSize);
+                });
+            return getScheme()[bucket-1] //zero based index
+        }
+
         function init(){
+            schemes.orange = {zeroFill:"white",maxFill:"#7f2704"};
             schemes.whiteToYellow = {zeroFill:"white",maxFill:"#fffc19"};
             schemes.brownToGold = {zeroFill: "#582f0a",maxFill:"#ffbf34"};
             schemes.blackToGreen = {zeroFill: "#151827",maxFill:"#B4FF47"};
             schemes.darkGreenToLightGreen = {zeroFill: "#2d6509",maxFill:"#00FF00"};
 
-            colorScheme = opts.colorScheme ? schemes[opts.colorScheme] : schemes["whiteToYellow"];
+            colorScheme = (opts.colorScheme && schemes[opts.colorScheme]) ? schemes[opts.colorScheme] : schemes["whiteToYellow"];
 
             if (sourceType === "csv") {
                 var deferred = $.Deferred();
@@ -117,7 +169,7 @@
 
                 svg.append("path")
                     .datum(areas)
-                    .attr("fill",colorScheme.zeroFill)
+                    .attr("fill","white")
                     .attr("stroke","gray")
                     .attr("stroke-linejoin","round")
                     .attr("stroke-width",0.2)
@@ -137,15 +189,24 @@
                     .attr("d",path);
 
                 svg.selectAll(".area-nofill")
-                    .attr("fill",colorScheme.zeroFill);
+                    .attr("fill","white");
 
-                svg.selectAll(".area-fill")
-                    .attr("fill",colorScheme.maxFill)
-                    .attr("fill-opacity",function(d){
-                        var areaId = d.properties[getAreaId()].toLowerCase(),
-                            opacityFactor = (mapDataArray[areaId] > 0) ? mapDataArray[areaId] / maxCount : 0;
-                        return opacityFactor;
-                    });
+                if (opts.newColorMapping) {
+                    svg.selectAll(".area-fill")
+                        .attr("fill",function(d){
+                            var areaId = d.properties[getAreaId()].toLowerCase();
+                            return getScaledColor(areaId);
+                        });
+                } else {
+                    svg.selectAll(".area-fill")
+                        .attr("fill",colorScheme.maxFill)
+                        .attr("fill-opacity",function(d){
+                            var areaId = d.properties[getAreaId()].toLowerCase(),
+                                opacityFactor = (mapDataArray[areaId] > 0) ? mapDataArray[areaId] / maxCount : 0;
+                            return opacityFactor;
+                        });
+                }
+
 
                 svg.selectAll("text")
                     .data(areas.features)
