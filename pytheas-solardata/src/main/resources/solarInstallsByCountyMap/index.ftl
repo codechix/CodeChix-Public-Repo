@@ -49,7 +49,7 @@ text {
 
 <div class="interesting-area">
     <span class="heading">CALIFORNIA COUNTIES</span>
-    <div display="inline-block" style="width:100%">
+    <div display="inline-block" style="width:1600">
         <div class="map-placeholder" style="float:left"></div>
         <div class="test-map-placeholder" style="float:left"></div>
     </div>
