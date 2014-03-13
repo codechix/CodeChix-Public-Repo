@@ -15,8 +15,7 @@ $(document).ready(function() {
         csvColIndexForCount: 5,
         csvHasHeader: true,
         source: "../solardata/county_unemployment_rates.csv",
-        colorScheme: "purple",
-        newColorMapping: true
+        colorScheme: "purple"
     };
 
     $(".map-placeholder").mapViz(mapperOptions);

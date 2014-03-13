@@ -191,22 +191,11 @@
                 svg.selectAll(".area-nofill")
                     .attr("fill","white");
 
-                if (opts.newColorMapping) {
-                    svg.selectAll(".area-fill")
-                        .attr("fill",function(d){
-                            var areaId = d.properties[getAreaId()].toLowerCase();
-                            return getScaledColor(areaId);
-                        });
-                } else {
-                    svg.selectAll(".area-fill")
-                        .attr("fill",colorScheme.maxFill)
-                        .attr("fill-opacity",function(d){
-                            var areaId = d.properties[getAreaId()].toLowerCase(),
-                                opacityFactor = (mapDataArray[areaId] > 0) ? mapDataArray[areaId] / maxCount : 0;
-                            return opacityFactor;
-                        });
-                }
-
+                svg.selectAll(".area-fill")
+                    .attr("fill",function(d){
+                        var areaId = d.properties[getAreaId()].toLowerCase();
+                        return getScaledColor(areaId);
+                    });
 
                 svg.selectAll("text")
                     .data(areas.features)
