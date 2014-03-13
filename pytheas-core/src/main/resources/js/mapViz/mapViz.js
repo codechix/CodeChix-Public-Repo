@@ -19,8 +19,6 @@
             mapDataArray = {},
             placeWithMaxCount,
             maxCount,
-            schemes = {},
-            colorScheme,
             csvHasHeader = opts.csvHasHeader;
 
         function getScheme(){
@@ -75,13 +73,6 @@
         }
 
         function init(){
-            schemes.orange = {zeroFill:"white",maxFill:"#7f2704"};
-            schemes.whiteToYellow = {zeroFill:"white",maxFill:"#fffc19"};
-            schemes.brownToGold = {zeroFill: "#582f0a",maxFill:"#ffbf34"};
-            schemes.blackToGreen = {zeroFill: "#151827",maxFill:"#B4FF47"};
-            schemes.darkGreenToLightGreen = {zeroFill: "#2d6509",maxFill:"#00FF00"};
-
-            colorScheme = (opts.colorScheme && schemes[opts.colorScheme]) ? schemes[opts.colorScheme] : schemes["whiteToYellow"];
 
             if (sourceType === "csv") {
                 var deferred = $.Deferred();
