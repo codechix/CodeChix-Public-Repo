@@ -4,7 +4,8 @@
 
         // given: level (county/zip), sourceType (csv/json), source (http json resource), csvColIndexForLevel, csvColIndexForCount,
         //        jsonWrapperObjectName, jsonLevelProperty, jsonCountProperty,
-        //        colorScheme (one of orange, purple, green or blue)
+        //        colorScheme (one of orange, purple, green or blue),
+        //        legendTitle (title for the legend / key, if any
         // when: init -> populate mapDataArray
         // when: render -> drawCaliforniaWithData
 
@@ -62,6 +63,39 @@
             return (opts.colorScheme && schemes[opts.colorScheme]) ? schemes[opts.colorScheme] : schemes["orange"]; //orange is default
         }
 
+        function getLegendColor(){
+            var dataDomain = [0], percentileSize = maxCount/100,
+                colorSchemeRange = ["white"],
+                color;
+            _.each([1,2,3,4,5,6,7,8,9],function(i){
+               dataDomain.push(Math.round(i * 11.111 * percentileSize))
+            });
+            colorSchemeRange = ["white"];  //color range starts at white, the default color for count=0
+            _.each(getScheme(),function(e){colorSchemeRange.push(e);});
+            color = d3.scale.threshold()
+                .domain(dataDomain)
+                .range(colorSchemeRange);
+            return color;
+        }
+
+        function getLegendScale(){
+            var x = d3.scale.linear()
+                .domain([0, maxCount])
+                .range([0, 600]);
+            return x;
+        }
+
+        function getLegendAxis(){
+            var formatNumber = d3.format(",d"),
+            xAxis = d3.svg.axis()
+                .scale(getLegendScale())
+                .orient("bottom")
+                .tickSize(13)
+                .tickValues(getLegendColor().domain())
+                .tickFormat(function(d) { return d >= 100 ? formatNumber(d) : null; });
+            return xAxis;
+        }
+
         function getScaledColor(areaId){
             if (!mapDataArray[areaId] > 0) {return "white";}
             var percentOfMax = mapDataArray[areaId] * 100/ maxCount,
@@ -70,6 +104,44 @@
                       return Math.round(percentOfMax) <= Math.round(i * bucketSize);
                 });
             return getScheme()[bucket-1] //zero based index
+        }
+
+        function appendLegend(svg){
+            var g = svg.append("g")
+                .attr("class", "key")
+                .attr("transform", "translate(400,40)"),
+                color = getLegendColor(),
+                x = getLegendScale(),
+                xAxis = getLegendAxis(),
+                theData = color.range().map(function(d, i) {
+                    return {
+                        x0: i ? x(color.domain()[i - 1]) : x.range()[0],
+                        x1: i < color.domain().length ? x(color.domain()[i]) : x.range()[1],
+                        z: d
+                    };
+                });
+
+
+            g.selectAll("rect")
+                .data(theData)
+                .enter().append("rect")
+                .attr("height", 8)
+                .attr("x", function(d) {
+                    return d.x0;
+                })
+                .attr("width", function(d) {
+                    return d.x1 - d.x0;
+                })
+                .style("fill", function(d) {
+                    return d.z;
+                });
+
+            g.call(xAxis).append("text")
+                .attr("class", "caption")
+                .attr("y", -6)
+                .attr("x", 50)
+                .text(opts.legendTitle);
+
         }
 
         function init(){
@@ -133,7 +205,7 @@
 
         function drawCalifornia(containerElement){
             
-            var width=800,height=1200,svg,projection,path,zip,
+            var width=1200,height=1200,svg,projection,path,zip,
                 jsonMapFile = (level === "zip") ? "ca_zipcodes.json" : "../solardata/ca_counties_name.json";  //defaults to county level unless zip specified.
             
             projection = d3.geo.albers()
@@ -199,6 +271,7 @@
                         return d.properties[getAreaId()];
                     });
             });
+            appendLegend(svg);
         }
 
         return render(this);

@@ -15,7 +15,8 @@ $(document).ready(function() {
         jsonWrapperObjectName: "installationCountByCounty",
         jsonLevelProperty: "county",
         jsonCountProperty: "count",
-        colorScheme: "orange"
+        colorScheme: "orange",
+        legendTitle: "# of solar installations"
     };
 
     $(".map-placeholder").mapViz(mapperOptions);
