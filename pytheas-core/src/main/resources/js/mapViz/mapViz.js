@@ -86,13 +86,21 @@
         }
 
         function getLegendAxis(){
-            var formatNumber = d3.format(",d"),
+            var legendScale = getLegendScale(),
+                formatNumber, xAxis;
+            if (_.max(legendScale.domain()) > 100 ) {
+                formatNumber= d3.format(",d");
+            } else {
+                formatNumber = d3.format("d%");
+            }
             xAxis = d3.svg.axis()
                 .scale(getLegendScale())
                 .orient("bottom")
                 .tickSize(13)
                 .tickValues(getLegendColor().domain())
-                .tickFormat(function(d) { return d >= 100 ? formatNumber(d) : null; });
+                .tickFormat(function(d) {
+                    return d >= 0 ? formatNumber(d) : null;
+                });
             return xAxis;
         }
 
