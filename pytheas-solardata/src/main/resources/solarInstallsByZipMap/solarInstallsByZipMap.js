@@ -15,7 +15,8 @@ $(document).ready(function() {
         jsonWrapperObjectName: "installationCountByZip",
         jsonLevelProperty: "zipCode",
         jsonCountProperty: "count",
-        colorScheme: "darkGreenToLightGreen"
+        colorScheme: "green",
+        legendTitle: "# of solar installations"
     };
 
     $(".map-placeholder").mapViz(mapperOptions);

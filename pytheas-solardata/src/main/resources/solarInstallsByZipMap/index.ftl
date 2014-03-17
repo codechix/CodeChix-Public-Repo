@@ -44,6 +44,18 @@ text {
     text-anchor: middle;
 }
 
+.caption {
+    font-weight: bold;
+}
+
+.key path {
+    display: none;
+}
+
+.key line {
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
 
 </style>
 
