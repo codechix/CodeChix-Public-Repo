@@ -238,14 +238,6 @@
                 var featureName = (level === "zip") ? "ca_zipcodes" : "ca_counties",
                     areas = topojson.feature(mapData, mapData.objects[featureName]);
 
-                svg.append("path")
-                    .datum(areas)
-                    .attr("fill","white")
-                    .attr("stroke","gray")
-                    .attr("stroke-linejoin","round")
-                    .attr("stroke-width",0.2)
-                    .attr("d",path);
-
                 svg.selectAll(".area-nofill")
                     .data(areas.features)
                     .enter()
@@ -282,6 +274,14 @@
                     .text(function(d) {
                         return d.properties[getAreaId()];
                     });
+
+                svg.append("path")
+                    .datum(areas)
+                    .attr("fill","none")
+                    .attr("stroke","gray")
+                    .attr("stroke-linejoin","round")
+                    .attr("stroke-width",0.4)
+                    .attr("d",path);
             });
             appendLegend(svg);
         }

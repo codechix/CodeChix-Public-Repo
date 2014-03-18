@@ -23,21 +23,6 @@
     margin-left: 2em;
 }
 
-.area-boundary {
-    fill: none;
-    stroke: gray;
-    stroke-linejoin: round;
-    stroke-width: 0.2;
-}
-
-.area-nosolar {
-    fill: #ddbfd1;
-}
-
-.area-solar {
-    fill: yellow;
-}
-
 text {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10px;
