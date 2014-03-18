@@ -257,7 +257,11 @@
                             return "area-nofill";
                         }
                     })
-                    .attr("d",path);
+                    .attr("d",path)
+                    .append("svg:title")
+                    .text(function(d){
+                        return d.properties[getAreaId()];
+                    });
 
                 svg.selectAll(".area-nofill")
                     .attr("fill","white");
@@ -268,7 +272,7 @@
                         return getScaledColor(areaId);
                     });
 
-                svg.selectAll("text")
+                svg.selectAll("text")   //append text
                     .data(areas.features)
                     .enter().append("text")
                     .attr("transform", function(d) {
