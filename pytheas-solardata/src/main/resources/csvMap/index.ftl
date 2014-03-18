@@ -46,7 +46,6 @@ text {
 </style>
 
 <div class="interesting-area">
-    <span class="heading">csv data in map</span>
     <div class="map-placeholder">
     </div>
 </div>

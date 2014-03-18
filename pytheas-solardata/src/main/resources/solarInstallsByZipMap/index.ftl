@@ -45,7 +45,6 @@ text {
 </style>
 
 <div class="interesting-area">
-    <span class="heading">CALIFORNIA ZIPCODES</span>
     <div class="map-placeholder">
     </div>
 </div>
