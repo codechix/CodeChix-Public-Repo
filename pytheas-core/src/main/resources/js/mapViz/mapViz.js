@@ -250,9 +250,11 @@
                         }
                     })
                     .attr("d",path)
-                    .append("svg:title")
+                    .append("svg:title") //this adds the mouseover tooltip
                     .text(function(d){
-                        return d.properties[getAreaId()];
+                        var areaName = d.properties[getAreaId()],
+                        areaDataPoint =  mapDataArray[areaName.toLowerCase()] > 0 ? mapDataArray[areaName.toLowerCase()] : 0;
+                        return areaName + " : " + areaDataPoint;
                     });
 
                 svg.selectAll(".area-nofill")
