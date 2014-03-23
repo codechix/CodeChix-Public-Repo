@@ -127,27 +127,6 @@ public class SolarDataResource {
         return Response.ok(output.toString()).build();
     }
 
-    @GET
-    @Produces( MediaType.TEXT_PLAIN )
-    @Path("/county_unemployment_rates.csv")
-    public Response getUnemploymentData()
-    {  StringBuffer output = new StringBuffer();
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream resourceAsStream = classLoader.getResourceAsStream(pathToUnemploymentRates);
-        BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
-        String line;
-        try {
-             while ((line = br.readLine()) != null) {
-                output.append(line);
-                output.append("\n");
-            }
-        } catch (IOException e) {
-            LOG.error("IOException in reading unemployment rates", e);
-        }
-
-        return Response.ok(output.toString()).build();
-    }
-
     //TODO: remove this same resource from the *ByCountyMapResource.java. Maybe move up to the AppResource?
     @Produces({"application/json"})
     @Path("/ca_counties_name.json")

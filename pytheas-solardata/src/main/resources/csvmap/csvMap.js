@@ -14,7 +14,7 @@ $(document).ready(function() {
         csvColIndexForLevel: 0,
         csvColIndexForCount: 5,
         csvHasHeader: true,
-        source: "../solardata/county_unemployment_rates.csv",
+        source: "../unemploymentData/county_unemployment_rates.csv",
         colorScheme: "purple",
         legendTitle: "unemployment rate (%)"
     };
