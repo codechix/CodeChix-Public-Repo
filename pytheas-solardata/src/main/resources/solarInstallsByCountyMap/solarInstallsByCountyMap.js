@@ -13,8 +13,8 @@ $(document).ready(function() {
         level : "county",
         source: "../solardata/installationCountByCounty.json",
         jsonWrapperObjectName: "installationCountByCounty",
-        jsonLevelProperty: "county",
-        jsonCountProperty: "count",
+        jsonPropertyNameForArea: "county",
+        jsonPropertyNameForQuantity: "count",
         colorScheme: "orange",
         legendTitle: "# of solar installations"
     };

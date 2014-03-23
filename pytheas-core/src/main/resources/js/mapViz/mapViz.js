@@ -3,7 +3,7 @@
     $.fn.mapViz = function(opts) {
 
         // given: level (county/zip), sourceType (csv/json), source (http json resource), csvColIndexForLevel, csvColIndexForCount,
-        //        jsonWrapperObjectName, jsonLevelProperty, jsonCountProperty,
+        //        jsonWrapperObjectName, jsonPropertyNameForArea, jsonPropertyNameForQuantity,
         //        colorScheme (one of orange, purple, green or blue),
         //        legendTitle (title for the legend / key, if any
         // when: init -> populate mapDataArray
@@ -15,8 +15,8 @@
             csvColIndexForLevel = opts.csvColIndexForLevel,
             csvColIndexForCount = opts.csvColIndexForCount,
             jsonWrapperObjectName = opts.jsonWrapperObjectName,//TODO: make this fixed? something like data...
-            jsonLevelProperty = opts.jsonLevelProperty,
-            jsonCountProperty = opts.jsonCountProperty,
+            jsonPropertyNameForArea = opts.jsonPropertyNameForArea,
+            jsonPropertyNameForQuantity = opts.jsonPropertyNameForQuantity,
             mapDataArray = {},
             placeWithMaxCount,
             maxCount,
@@ -179,13 +179,13 @@
                 var deferred = $.Deferred();
                 $.when(getJsonData()).then(function(data){
                     _.each(data[jsonWrapperObjectName],function(element){
-                        var level = element[jsonLevelProperty].toLowerCase();
-                        mapDataArray[level] = element[jsonCountProperty];
+                        var level = element[jsonPropertyNameForArea].toLowerCase();
+                        mapDataArray[level] = element[jsonPropertyNameForQuantity];
                     });
                     placeWithMaxCount = _.max(data[jsonWrapperObjectName],function(data){
-                        return data[jsonCountProperty];
+                        return data[jsonPropertyNameForQuantity];
                     });
-                    maxCount = Number(placeWithMaxCount[jsonCountProperty]);
+                    maxCount = Number(placeWithMaxCount[jsonPropertyNameForQuantity]);
                     deferred.resolve();
                 });
                 return deferred.promise();

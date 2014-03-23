@@ -13,8 +13,8 @@ $(document).ready(function() {
         level : "zip",
         source: "../solardata/installationCountByZip.json",
         jsonWrapperObjectName: "installationCountByZip",
-        jsonLevelProperty: "zipCode",
-        jsonCountProperty: "count",
+        jsonPropertyNameForArea: "zipCode",
+        jsonPropertyNameForQuantity: "count",
         colorScheme: "green",
         legendTitle: "# of solar installations"
     };

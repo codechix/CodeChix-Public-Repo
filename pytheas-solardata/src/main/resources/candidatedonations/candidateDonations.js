@@ -13,8 +13,8 @@ $(document).ready(function() {
         level : "county",
         source: "../candidateDonations/donationTotalByCounty.json",
         jsonWrapperObjectName: "donationTotalByCounty",
-        jsonLevelProperty: "county",
-        jsonCountProperty: "amount",
+        jsonPropertyNameForArea: "county",
+        jsonPropertyNameForQuantity: "amount",
         colorScheme: "blue",
         legendTitle: "Donation amount ($)"
     };
