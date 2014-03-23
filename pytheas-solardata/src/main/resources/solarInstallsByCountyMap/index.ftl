@@ -2,7 +2,7 @@
 
 <#import "/layout/bootstrap/simplepage.ftl" as layout />
 
-<@layout.pagelayout title="# of completed solar installations by county: d3 map">
+<@layout.pagelayout title="Number of Completed Solar Installations">
 
 <!-- Move your JavaScript code to an include file -->
 <script type="text/javascript">
@@ -45,9 +45,7 @@ text {
 </style>
 
 <div class="interesting-area">
-    <div display="inline-block" style="width:1600">
-        <div class="map-placeholder" style="float:left"></div>
-    </div>
+        <div class="map-placeholder"></div>
 </div>
 </@layout.pagelayout>
 
