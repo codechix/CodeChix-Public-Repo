@@ -214,7 +214,7 @@
         function drawCalifornia(containerElement){
             
             var width=1200,height=1200,svg,projection,path,zip,
-                jsonMapFile = (level === "zip") ? "ca_zipcodes.json" : "../solardata/ca_counties_name.json";  //defaults to county level unless zip specified.
+                jsonMapFile = (level === "zip") ? "../geopolitical/ca_zipcodes.json" : "../geopolitical/ca_counties_name.json";  //defaults to county level unless zip specified.
             
             projection = d3.geo.albers()
                 .rotate([122,0])            //rotate from 0 longitude over to 122, where CA is

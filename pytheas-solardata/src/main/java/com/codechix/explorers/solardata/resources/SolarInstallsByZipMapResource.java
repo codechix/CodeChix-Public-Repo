@@ -24,19 +24,5 @@ public class SolarInstallsByZipMapResource {
     public Viewable solarMap(){
         return new Viewable("/solarInstallsByZipMap/index.ftl");
     }
-    @Produces({"application/json"})
-    @Path("/ca_zipcodes.json")
-    @GET
-    public Response getCaZipcodes() throws IOException, JSONException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("ca_zipcodes_2.json");
 
-        StringWriter writer = new StringWriter();
-        IOUtils.copy(stream, writer, "UTF-8");
-        String theString = writer.toString();
-
-        JSONObject json = new JSONObject(theString);
-
-        return Response.ok(json.toString()).build();
-    }
 }

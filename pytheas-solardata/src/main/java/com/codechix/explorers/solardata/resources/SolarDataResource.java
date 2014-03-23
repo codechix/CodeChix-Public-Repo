@@ -31,7 +31,6 @@ public class SolarDataResource {
     private Logger LOG = LoggerFactory.getLogger(SolarDataResource.class);
     private String pathToSolarStats = "caSolarStats.csv";
     private String pathToSolarStatsExtra = "caSolarStatsExtra.csv";
-    private String pathToUnemploymentRates = "county_unemployment_rates.csv";
 
     @GET
     @Produces( MediaType.TEXT_HTML )
@@ -125,40 +124,6 @@ public class SolarDataResource {
         }
 
         return Response.ok(output.toString()).build();
-    }
-
-    //TODO: remove this same resource from the *ByCountyMapResource.java. Maybe move up to the AppResource?
-    @Produces({"application/json"})
-    @Path("/ca_counties_name.json")
-    @GET
-    public Response getCounties() throws IOException, JSONException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("ca_counties_name.json");
-
-        StringWriter writer = new StringWriter();
-        IOUtils.copy(stream, writer, "UTF-8");
-        String theString = writer.toString();
-
-        JSONObject json = new JSONObject(theString);
-
-        return Response.ok(json.toString()).build();
-    }
-
-    //TODO: remove this same resource from the *ByZipMapResource.java
-    @Produces({"application/json"})
-    @Path("/ca_zipcodes.json")
-    @GET
-    public Response getCaZipcodes() throws IOException, JSONException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("ca_zipcodes_2.json");
-
-        StringWriter writer = new StringWriter();
-        IOUtils.copy(stream, writer, "UTF-8");
-        String theString = writer.toString();
-
-        JSONObject json = new JSONObject(theString);
-
-        return Response.ok(json.toString()).build();
     }
 
     private Multiset<String> getAllZips(BufferedReader br){
