@@ -185,7 +185,7 @@
                     placeWithMaxCount = _.max(data[jsonWrapperObjectName],function(data){
                         return data[jsonCountProperty];
                     });
-                    maxCount = Number(placeWithMaxCount.count);
+                    maxCount = Number(placeWithMaxCount[jsonCountProperty]);
                     deferred.resolve();
                 });
                 return deferred.promise();
